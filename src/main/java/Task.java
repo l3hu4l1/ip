@@ -19,10 +19,10 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public abstract String getTaskType();
+    public abstract TaskType getTaskType();
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + description;
+        return "[" + getTaskType().getCode() + "][" + getStatusIcon() + "] " + description;
     }
 }

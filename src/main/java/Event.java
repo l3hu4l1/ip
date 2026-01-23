@@ -9,13 +9,13 @@ public class Event extends Task {
     }
 
     @Override
-    public String getTaskType() {
-        return "E";
+    public TaskType getTaskType() {
+        return TaskType.EVENT;
     }
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + description + " (from: " + from + " to: " + to
+        return "[" + getTaskType().getCode() + "][" + getStatusIcon() + "] " + description + " (from: " + from + " to: " + to
                 + ")";
     }
 }
