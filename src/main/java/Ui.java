@@ -32,10 +32,10 @@ public class Ui {
         System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 
-    public void printList(Task[] tasks, int taskCount) {
+    public void printList(java.util.ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println(" " + (i + 1) + "." + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
     }
 
@@ -47,5 +47,11 @@ public class Ui {
     public void printTaskUnmarked(Task task) {
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
+    }
+
+    public void printTaskDeleted(Task task, int taskCount) {
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("   " + task);
+        System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 }
