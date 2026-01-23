@@ -10,6 +10,7 @@ public class Pixel {
         String line = "____________________________________________________________";
         Task[] tasks = new Task[100];
         int taskCount = 0;
+        Ui ui = new Ui();
 
         System.out.println(line);
         System.out.println(" Hello! I'm\n" + logo);
@@ -43,27 +44,21 @@ public class Pixel {
             } else if (input.startsWith("todo ")) {
                 String description = Parser.parseTodoDescription(input);
                 tasks[taskCount] = new Todo(description);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount]);
                 taskCount++;
-                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                ui.printTaskAdded(tasks[taskCount - 1], taskCount);
             } else if (input.startsWith("deadline ")) {
                 String description = Parser.parseDeadlineDescription(input);
                 String by = Parser.parseDeadlineBy(input);
                 tasks[taskCount] = new Deadline(description, by);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount]);
                 taskCount++;
-                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                ui.printTaskAdded(tasks[taskCount - 1], taskCount);
             } else if (input.startsWith("event ")) {
                 String description = Parser.parseEventDescription(input);
                 String from = Parser.parseEventFrom(input);
                 String to = Parser.parseEventTo(input);
                 tasks[taskCount] = new Event(description, from, to);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount]);
                 taskCount++;
-                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                ui.printTaskAdded(tasks[taskCount - 1], taskCount);
             }
 
             System.out.println(line);
