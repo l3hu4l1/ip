@@ -31,19 +31,39 @@ public class Pixel {
                     System.out.println(" " + (i + 1) + "." + tasks[i]);
                 }
             } else if (input.startsWith("mark ")) {
-                int taskIndex = Integer.parseInt(input.substring(5)) - 1;
+                int taskIndex = Parser.parseMarkIndex(input);
                 tasks[taskIndex].markAsDone();
                 System.out.println(" Nice! I've marked this task as done:");
                 System.out.println("   " + tasks[taskIndex]);
             } else if (input.startsWith("unmark ")) {
-                int taskIndex = Integer.parseInt(input.substring(7)) - 1;
+                int taskIndex = Parser.parseUnmarkIndex(input);
                 tasks[taskIndex].markAsNotDone();
                 System.out.println(" OK, I've marked this task as not done yet:");
                 System.out.println("   " + tasks[taskIndex]);
-            } else {
-                tasks[taskCount] = new Task(input);
+            } else if (input.startsWith("todo ")) {
+                String description = Parser.parseTodoDescription(input);
+                tasks[taskCount] = new Todo(description);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount]);
                 taskCount++;
-                System.out.println(" added: " + input);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+            } else if (input.startsWith("deadline ")) {
+                String description = Parser.parseDeadlineDescription(input);
+                String by = Parser.parseDeadlineBy(input);
+                tasks[taskCount] = new Deadline(description, by);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount]);
+                taskCount++;
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+            } else if (input.startsWith("event ")) {
+                String description = Parser.parseEventDescription(input);
+                String from = Parser.parseEventFrom(input);
+                String to = Parser.parseEventTo(input);
+                tasks[taskCount] = new Event(description, from, to);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount]);
+                taskCount++;
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
             }
 
             System.out.println(line);
