@@ -1,9 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Pixel {
     public static void main(String[] args) {
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
         Ui ui = new Ui();
 
         ui.printWelcome();
@@ -19,35 +19,40 @@ public class Pixel {
                 if (input.equals("bye")) {
                     break;
                 } else if (input.equals("list")) {
-                    ui.printList(tasks, taskCount);
+                    ui.printList(tasks);
                 } else if (input.startsWith("mark")) {
                     int taskIndex = Parser.parseMarkIndex(input);
-                    validateTaskIndex(taskIndex, taskCount);
-                    tasks[taskIndex].markAsDone();
-                    ui.printTaskMarked(tasks[taskIndex]);
+                    validateTaskIndex(taskIndex, tasks.size());
+                    tasks.get(taskIndex).markAsDone();
+                    ui.printTaskMarked(tasks.get(taskIndex));
                 } else if (input.startsWith("unmark")) {
                     int taskIndex = Parser.parseUnmarkIndex(input);
-                    validateTaskIndex(taskIndex, taskCount);
-                    tasks[taskIndex].markAsNotDone();
-                    ui.printTaskUnmarked(tasks[taskIndex]);
+                    validateTaskIndex(taskIndex, tasks.size());
+                    tasks.get(taskIndex).markAsNotDone();
+                    ui.printTaskUnmarked(tasks.get(taskIndex));
                 } else if (input.startsWith("todo")) {
                     String description = Parser.parseTodoDescription(input);
-                    tasks[taskCount] = new Todo(description);
-                    taskCount++;
-                    ui.printTaskAdded(tasks[taskCount - 1], taskCount);
+                    Task task = new Todo(description);
+                    tasks.add(task);
+                    ui.printTaskAdded(task, tasks.size());
                 } else if (input.startsWith("deadline")) {
                     String description = Parser.parseDeadlineDescription(input);
                     String by = Parser.parseDeadlineBy(input);
-                    tasks[taskCount] = new Deadline(description, by);
-                    taskCount++;
-                    ui.printTaskAdded(tasks[taskCount - 1], taskCount);
+                    Task task = new Deadline(description, by);
+                    tasks.add(task);
+                    ui.printTaskAdded(task, tasks.size());
                 } else if (input.startsWith("event")) {
                     String description = Parser.parseEventDescription(input);
                     String from = Parser.parseEventFrom(input);
                     String to = Parser.parseEventTo(input);
-                    tasks[taskCount] = new Event(description, from, to);
-                    taskCount++;
-                    ui.printTaskAdded(tasks[taskCount - 1], taskCount);
+                    Task task = new Event(description, from, to);
+                    tasks.add(task);
+                    ui.printTaskAdded(task, tasks.size());
+                } else if (input.startsWith("delete")) {
+                    int taskIndex = Parser.parseDeleteIndex(input);
+                    validateTaskIndex(taskIndex, tasks.size());
+                    Task task = tasks.remove(taskIndex);
+                    ui.printTaskDeleted(task, tasks.size());
                 } else {
                     throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }

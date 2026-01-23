@@ -97,4 +97,15 @@ public class Parser {
             throw new PixelException("OOPS!!! Please provide a valid task number to unmark.");
         }
     }
+
+    public static int parseDeleteIndex(String input) throws PixelException {
+        if (input.length() <= 6) {
+            throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
+        }
+        try {
+            return Integer.parseInt(input.substring(6).trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
+        }
+    }
 }
