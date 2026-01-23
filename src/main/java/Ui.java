@@ -1,9 +1,9 @@
 public class Ui {
-    private static final String logo = " ____  _          _  \n"
+    private static final String logo = "  ____  _          _  \n"
             + "|  _ \\(_)_  _____| | \n"
             + "| |_) | \\ \\/ / _ \\ | \n"
             + "|  __/| |>  <  __/ | \n"
-            + "|_|   |_/_/\\_\\___|_| \n";
+            + "|_|   |_/_/\\_\\___|_|";
     private static final String line = "____________________________________________________________";
 
     public void printWelcome() {
@@ -16,6 +16,10 @@ public class Ui {
     public void printFarewell() {
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println(line);
+    }
+
+    public void printError(String message) {
+        System.out.println(" " + message);
     }
 
     public String getLine() {
