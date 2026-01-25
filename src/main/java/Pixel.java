@@ -36,8 +36,8 @@ public class Pixel {
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
                 } else if (input.startsWith("deadline")) {
-                    String description = Parser.parseDeadlineDescription(input);
                     String by = Parser.parseDeadlineBy(input);
+                    String description = Parser.parseDeadlineDescription(input);
                     Task task = new Deadline(description, by);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());

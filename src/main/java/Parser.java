@@ -11,11 +11,8 @@ public class Parser {
     }
 
     public static String parseDeadlineDescription(String input) throws PixelException {
-        String rest = input.length() > 8 ? input.substring(8) : "";
+        String rest = input.substring(8);
         int byIndex = rest.indexOf("/by ");
-        if (byIndex == -1) {
-            throw new PixelException("OOPS!!! A deadline must include /by.");
-        }
         String description = rest.substring(0, byIndex).trim();
         if (description.isEmpty()) {
             throw new PixelException("OOPS!!! The description of a deadline cannot be empty.");
