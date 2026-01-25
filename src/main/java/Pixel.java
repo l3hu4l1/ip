@@ -54,7 +54,8 @@ public class Pixel {
                     Task task = tasks.remove(taskIndex);
                     ui.printTaskDeleted(task, tasks.size());
                 } else {
-                    throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new PixelException(
+                        "OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (PixelException e) {
                 ui.printError(e.getMessage());
