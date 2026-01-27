@@ -1,21 +1,21 @@
 public class Ui {
-    private static final String logo = "  ____  _          _  \n"
+    private static final String LOGO = "  ____  _          _  \n"
             + "|  _ \\(_)_  _____| | \n"
             + "| |_) | \\ \\/ / _ \\ | \n"
             + "|  __/| |>  <  __/ | \n"
             + "|_|   |_/_/\\_\\___|_|";
-    private static final String line = "____________________________________________________________";
+    private static final String LINE = "____________________________________________________________";
 
     public void printWelcome() {
-        System.out.println(line);
-        System.out.println(" Hello! I'm\n" + logo);
+        System.out.println(LINE);
+        System.out.println(" Hello! I'm\n" + LOGO);
         System.out.println(" What can I do for you?");
-        System.out.println(line);
+        System.out.println(LINE);
     }
 
     public void printFarewell() {
         System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println(line);
+        System.out.println(LINE);
     }
 
     public void printError(String message) {
