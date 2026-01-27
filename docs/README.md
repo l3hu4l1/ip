@@ -1,30 +1,68 @@
 # Pixel User Guide
 
-// Update the title above to match the actual product name
+!(./pixel.png)
 
-// Product screenshot goes here
+Pixel is a CLI task assistant. It supports various task types and task display commands.
 
-// Product intro goes here
+## Quick start
+1. Build and run:
+   ```bash
+   $ javac -d bin src/main/java/*.java
+   $ java -classpath bin Pixel
+   ```
+2. Type commands followed by Enter.
 
-## Adding deadlines
+## Commands
+- `todo DESCRIPTION` — add a todo.
+- `deadline DESCRIPTION /by TIME` — add a deadline.
+- `event DESCRIPTION /from START /to END` — add an event.
+- `list` — show all tasks.
+- `mark INDEX` — mark a task done (1-based).
+- `unmark INDEX` — mark a task not done.
+- `delete INDEX` — remove a task.
+- `bye` — exit.
 
-// Describe the action and its outcome.
-
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
+## Add various task types
+Support for todos, deadlines and events:
 ```
-expected output
+$ todo borrow book
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] borrow book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+$ deadline return book /by Sunday
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Sunday)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+$ event project meeting /from Mon 2pm /to 4pm
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Now you have 3 tasks in the list.
+____________________________________________________________
 ```
-
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+## Mark and unmark tasks
+```
+$ mark 2
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] return book (by: Sunday)
+____________________________________________________________
+$ unmark 2
+____________________________________________________________
+ OK, I've marked this task as not done yet:
+   [D][ ] return book (by: Sunday)
+____________________________________________________________
+```
+## Remove tasks
+```
+$ delete 3
+____________________________________________________________
+ Noted. I've removed this task:
+   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+```
