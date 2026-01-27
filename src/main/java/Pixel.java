@@ -13,7 +13,7 @@ public class Pixel {
 
         while (true) {
             input = scanner.nextLine();
-            System.out.println(ui.getLine());
+            ui.printLine();
 
             try {
                 if (input.equals("bye")) {
@@ -61,7 +61,7 @@ public class Pixel {
                 ui.printError(e.getMessage());
             }
 
-            System.out.println(ui.getLine());
+            ui.printLine();
         }
 
         scanner.close();

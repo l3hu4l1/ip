@@ -22,8 +22,8 @@ public class Ui {
         System.out.println(" " + message);
     }
 
-    public String getLine() {
-        return line;
+    public void printLine() {
+        System.out.println(LINE);
     }
 
     public void printTaskAdded(Task task, int taskCount) {
