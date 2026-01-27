@@ -1,7 +1,6 @@
 # Pixel User Guide
 
-!(./pixel.png)
-
+![](./pixel.png)
 Pixel is a CLI task assistant. It supports various task types and task display commands.
 
 ## Quick start
