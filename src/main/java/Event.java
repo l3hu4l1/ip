@@ -16,6 +16,6 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[" + getTaskType().getCode() + "][" + getStatusIcon() + "] "
-         + description + " (from: " + from + " to: " + to + ")";
+            + description + " (from: " + from + " to: " + to + ")";
     }
 }
