@@ -47,6 +47,29 @@ public class Storage {
         return tasks;
     }
 
+    public void save(ArrayList<Task> tasks) throws PixelException {
+        try {
+            Path directory = filePath.getParent();
+            if (directory != null && !Files.exists(directory)) {
+                Files.createDirectories(directory);
+            }
+
+            FileWriter writer = new FileWriter(filePath.toFile());
+
+            for (Task task : tasks) {
+                writer.write(formatTask(task) + System.lineSeparator());
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            throw new PixelException("Error saving tasks to file: " + e.getMessage());
+        }
+    }
+
+    private String formatTask(Task task) {
+        return "";
+    }
+
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
 
