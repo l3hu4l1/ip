@@ -1,28 +1,53 @@
 # Pixel User Guide
 
-![](./pixel.png)
-Pixel is a CLI task assistant. It supports various task types and task display commands.
+![Pixel Logo](pixel.png)
+
+Pixel is a CLI task assistant that helps you keep track of your todos,
+deadlines, and events. All tasks are automatically saved to disk and loaded when
+you restart the application.
+
+## Features
+
+- Add three types of tasks: todos, deadlines, and events
+- Mark tasks as done or not done
+- Delete tasks from your list
+- Tasks are saved automatically
+- Display all your tasks with status indicators
 
 ## Quick start
-1. Build and run:
-   ```bash
-   $ javac -d bin src/main/java/*.java
-   $ java -classpath bin Pixel
-   ```
-2. Type commands followed by Enter.
 
-## Commands
-- `todo DESCRIPTION` — add a todo.
-- `deadline DESCRIPTION /by TIME` — add a deadline.
-- `event DESCRIPTION /from START /to END` — add an event.
-- `list` — show all tasks.
-- `mark INDEX` — mark a task done (1-based).
-- `unmark INDEX` — mark a task not done.
-- `delete INDEX` — remove a task.
-- `bye` — exit.
+1. Ensure you have Java 11 or above installed.
+2. Build and run:
+    ```bash
+    $ javac -d bin src/main/java/*.java
+    $ java -classpath bin Pixel
+    ```
+3. Type commands followed by Enter.
+4. Your tasks are automatically saved to `./data/pixel.txt`
 
-## Add various task types
-Support for todos, deadlines and events:
+## Commands Summary
+
+| Command       | Format                                  |
+| ------------- | --------------------------------------- |
+| Add todo      | `todo DESCRIPTION`                      |
+| Add deadline  | `deadline DESCRIPTION /by TIME`         |
+| Add event     | `event DESCRIPTION /from START /to END` |
+| List tasks    | `list`                                  |
+| Mark done     | `mark INDEX`                            |
+| Mark not done | `unmark INDEX`                          |
+| Delete task   | `delete INDEX`                          |
+| Exit          | `bye`                                   |
+
+## Feature Details
+
+### Add various task types
+
+Pixel supports three types of tasks:
+
+- **Todo [T]**: Simple tasks
+- **Deadline [D]**: Tasks with a deadline
+- **Event [E]**: Tasks with a start and end date/time
+
 ```
 $ todo borrow book
 ____________________________________________________________
@@ -30,12 +55,14 @@ ____________________________________________________________
    [T][ ] borrow book
  Now you have 1 tasks in the list.
 ____________________________________________________________
+
 $ deadline return book /by Sunday
 ____________________________________________________________
  Got it. I've added this task:
    [D][ ] return book (by: Sunday)
  Now you have 2 tasks in the list.
 ____________________________________________________________
+
 $ event project meeting /from Mon 2pm /to 4pm
 ____________________________________________________________
  Got it. I've added this task:
@@ -43,20 +70,43 @@ ____________________________________________________________
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ```
-## Mark and unmark tasks
+
+### Display all tasks
+
+View all your tasks with their status:
+
+```
+$ list
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] borrow book
+ 2.[D][ ] return book (by: Sunday)
+ 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+```
+
+### Mark and unmark tasks
+
+Track completion status with `[X]` for done and `[ ]` for not done:
+
 ```
 $ mark 2
 ____________________________________________________________
  Nice! I've marked this task as done:
    [D][X] return book (by: Sunday)
 ____________________________________________________________
+
 $ unmark 2
 ____________________________________________________________
  OK, I've marked this task as not done yet:
    [D][ ] return book (by: Sunday)
 ____________________________________________________________
 ```
-## Remove tasks
+
+### Delete tasks
+
+Remove tasks you no longer need:
+
 ```
 $ delete 3
 ____________________________________________________________
