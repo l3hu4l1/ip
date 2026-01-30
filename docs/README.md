@@ -65,3 +65,24 @@ ____________________________________________________________
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ```
+
+### Data Persistence
+
+All your tasks are automatically saved to `./data/pixel.txt` whenever you:
+
+- Add a new task
+- Mark/unmark a task
+- Delete a task
+
+When you restart Pixel, your tasks are automatically loaded. The data file uses
+this format:
+
+```
+T | 1 | read book
+D | 0 | return book | June 6th
+E | 0 | project meeting | Aug 6th 2pm | 4pm
+```
+
+- First field: Task type (T/D/E)
+- Second field: Status (1=done, 0=not done)
+- Remaining fields: Task details
