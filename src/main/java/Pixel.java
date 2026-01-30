@@ -34,22 +34,26 @@ public class Pixel {
                     validateTaskIndex(taskIndex, tasks.size());
                     tasks.get(taskIndex).markAsDone();
                     ui.printTaskMarked(tasks.get(taskIndex));
+                    storage.save(tasks);
                 } else if (input.startsWith("unmark")) {
                     int taskIndex = Parser.parseUnmarkIndex(input);
                     validateTaskIndex(taskIndex, tasks.size());
                     tasks.get(taskIndex).markAsNotDone();
                     ui.printTaskUnmarked(tasks.get(taskIndex));
+                    storage.save(tasks);
                 } else if (input.startsWith("todo")) {
                     String description = Parser.parseTodoDescription(input);
                     Task task = new Todo(description);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
+                    storage.save(tasks);
                 } else if (input.startsWith("deadline")) {
                     String by = Parser.parseDeadlineBy(input);
                     String description = Parser.parseDeadlineDescription(input);
                     Task task = new Deadline(description, by);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
+                    storage.save(tasks);
                 } else if (input.startsWith("event")) {
                     String description = Parser.parseEventDescription(input);
                     String from = Parser.parseEventFrom(input);
@@ -57,11 +61,13 @@ public class Pixel {
                     Task task = new Event(description, from, to);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
+                    storage.save(tasks);
                 } else if (input.startsWith("delete")) {
                     int taskIndex = Parser.parseDeleteIndex(input);
                     validateTaskIndex(taskIndex, tasks.size());
                     Task task = tasks.remove(taskIndex);
                     ui.printTaskDeleted(task, tasks.size());
+                    storage.save(tasks);
                 } else {
                     throw new PixelException(
                         "OOPS!!! I'm sorry, but I don't know what that means :-(");
