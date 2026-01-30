@@ -48,7 +48,38 @@ public class Storage {
     }
 
     private Task parseTask(String line) {
+        String[] parts = line.split(" \\| ");
+
+        if (parts.length < 3) {
+            return null;
+        }
+
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
         Task task = null;
+
+        switch (type) {
+        case "T":
+            task = new Todo(description);
+            break;
+        case "D":
+            if (parts.length >= 4) {
+                task = new Deadline(description, parts[3]);
+            }
+            break;
+        case "E":
+            if (parts.length >= 5) {
+                task = new Event(description, parts[3], parts[4]);
+            }
+            break;
+        }
+
+        if (task != null && isDone) {
+            task.markAsDone();
+        }
+
         return task;
     }
 }
