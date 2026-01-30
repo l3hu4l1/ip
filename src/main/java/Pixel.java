@@ -2,11 +2,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Pixel {
+    private static final String FILE_PATH = "./data/pixel.txt";
+
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         Ui ui = new Ui();
+        Storage storage = new Storage(FILE_PATH);
 
         ui.printWelcome();
+
+        try {
+            tasks = storage.load();
+        } catch (PixelException e) {
+            ui.printError(e.getMessage());
+        }
 
         Scanner scanner = new Scanner(System.in);
         String input;
