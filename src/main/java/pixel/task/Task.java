@@ -1,3 +1,5 @@
+package pixel.task;
+
 public abstract class Task {
     protected String description;
     protected TaskStatus status;
@@ -9,6 +11,10 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return status.getIcon();
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void markAsDone() {

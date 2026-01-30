@@ -1,3 +1,7 @@
+package pixel.parser;
+
+import pixel.exception.PixelException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

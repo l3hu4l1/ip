@@ -1,3 +1,5 @@
+package pixel.task;
+
 public enum TaskStatus {
     DONE("X"),
     NOT_DONE(" ");

@@ -1,3 +1,9 @@
+package pixel.ui;
+
+import pixel.task.Task;
+
+import java.util.ArrayList;
+
 public class Ui {
     private static final String LOGO = "  ____  _          _  \n"
             + "|  _ \\(_)_  _____| | \n"
