@@ -77,10 +77,11 @@ public class Storage {
             return type + " | " + done + " | " + ((Todo) task).description;
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
-            return type + " | " + done + " | " + deadline.description + " | " + deadline.by;
+            return type + " | " + done + " | " + deadline.description + " | " + deadline.by.format(STORAGE_FORMATTER);
         } else if (task instanceof Event) {
             Event event = (Event) task;
-            return type + " | " + done + " | " + event.description + " | " + event.from + " | " + event.to;
+            return type + " | " + done + " | " + event.description + " | " + event.from.format(STORAGE_FORMATTER)
+                    + " | " + event.to.format(STORAGE_FORMATTER);
         }
 
         return "";
