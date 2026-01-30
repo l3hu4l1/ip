@@ -76,7 +76,7 @@ public class Parser {
         return description;
     }
 
-    public static String parseEventFrom(String input) throws PixelException {
+    public static LocalDateTime parseEventFrom(String input) throws PixelException {
         String rest = input.length() > 5 ? input.substring(5) : "";
         int fromIndex = rest.indexOf("/from ");
         int toIndex = rest.indexOf("/to ");
@@ -87,10 +87,10 @@ public class Parser {
         if (from.isEmpty()) {
             throw new PixelException("OOPS!!! The start time of an event cannot be empty.");
         }
-        return from;
+        return parseDateTime(from);
     }
 
-    public static String parseEventTo(String input) throws PixelException {
+    public static LocalDateTime parseEventTo(String input) throws PixelException {
         String rest = input.length() > 5 ? input.substring(5) : "";
         int toIndex = rest.indexOf("/to ");
         if (toIndex == -1) {
@@ -100,7 +100,7 @@ public class Parser {
         if (to.isEmpty()) {
             throw new PixelException("OOPS!!! The end time of an event cannot be empty.");
         }
-        return to;
+        return parseDateTime(to);
     }
 
     public static int parseMarkIndex(String input) throws PixelException {

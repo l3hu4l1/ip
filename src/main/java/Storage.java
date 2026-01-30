@@ -116,7 +116,14 @@ public class Storage {
             break;
         case "E":
             if (parts.length >= 5) {
-                task = new Event(description, parts[3], parts[4]);
+                try {
+                    LocalDateTime from = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
+                    LocalDateTime to = LocalDateTime.parse(parts[4], STORAGE_FORMATTER);
+                    task = new Event(description, from, to);
+                } catch (Exception e) {
+                    // If parsing fails, skip this task
+                    return null;
+                }
             }
             break;
         }
