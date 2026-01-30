@@ -60,8 +60,6 @@ public class Parser {
             }
         } catch (DateTimeParseException e) {
             throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }
     }
 
