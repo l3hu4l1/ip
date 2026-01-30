@@ -86,3 +86,12 @@ E | 0 | project meeting | Aug 6th 2pm | 4pm
 - First field: Task type (T/D/E)
 - Second field: Status (1=done, 0=not done)
 - Remaining fields: Task details
+
+## Error Handling
+
+Pixel handles various error cases gracefully:
+
+- Empty descriptions: `OOPS!!! The description cannot be empty.`
+- Missing parameters: `OOPS!!! A deadline must include /by.`
+- Invalid task numbers: `OOPS!!! The task index is invalid.`
+- Unknown commands: `OOPS!!! I'm sorry, but I don't know what that means :-(`
