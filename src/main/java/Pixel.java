@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -50,6 +51,7 @@ public class Pixel {
                 } else if (input.startsWith("deadline")) {
                     String by = Parser.parseDeadlineBy(input);
                     String description = Parser.parseDeadlineDescription(input);
+                    LocalDateTime by = Parser.parseDeadlineBy(input);
                     Task task = new Deadline(description, by);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
@@ -71,6 +73,7 @@ public class Pixel {
                 } else {
                     throw new PixelException(
                         "OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (PixelException e) {
                 ui.printError(e.getMessage());

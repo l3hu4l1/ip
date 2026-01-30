@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
     private final Path filePath;
+    private static final DateTimeFormatter STORAGE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -102,7 +105,13 @@ public class Storage {
             break;
         case "D":
             if (parts.length >= 4) {
-                task = new Deadline(description, parts[3]);
+                try {
+                    LocalDateTime by = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
+                    task = new Deadline(description, by);
+                } catch (Exception e) {
+                    // If parsing fails, skip this task
+                    return null;
+                }
             }
             break;
         case "E":

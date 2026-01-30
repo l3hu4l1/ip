@@ -1,4 +1,13 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
+    private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter INPUT_TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmm");
+
     public static String parseTodoDescription(String input) throws PixelException {
         if (input.length() <= 4) {
             throw new PixelException("OOPS!!! The description of a todo cannot be empty.");
@@ -20,7 +29,7 @@ public class Parser {
         return description;
     }
 
-    public static String parseDeadlineBy(String input) throws PixelException {
+    public static LocalDateTime parseDeadlineBy(String input) throws PixelException {
         String rest = input.length() > 8 ? input.substring(8) : "";
         int byIndex = rest.indexOf("/by ");
         if (byIndex == -1) {
@@ -30,7 +39,28 @@ public class Parser {
         if (by.isEmpty()) {
             throw new PixelException("OOPS!!! The deadline time cannot be empty.");
         }
-        return by;
+        return parseDateTime(by);
+    }
+
+    public static LocalDateTime parseDateTime(String dateTimeStr) throws PixelException {
+        try {
+            String[] parts = dateTimeStr.split(" ");
+            LocalDate date = LocalDate.parse(parts[0], INPUT_DATE_FORMATTER);
+
+            if (parts.length > 1) {
+                LocalTime time = LocalTime.parse(parts[1], INPUT_TIME_FORMATTER);
+                return LocalDateTime.of(date, time);
+            } else {
+                // No time provided, default to 23:59
+                return LocalDateTime.of(date, LocalTime.of(23, 59));
+            }
+        } catch (DateTimeParseException e) {
+            throw new PixelException(
+                    "OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm (e.g., 2019-10-15 1800)");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new PixelException(
+                    "OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm (e.g., 2019-10-15 1800)");
+        }
     }
 
     public static String parseEventDescription(String input) throws PixelException {
