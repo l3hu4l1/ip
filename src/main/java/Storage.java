@@ -67,6 +67,19 @@ public class Storage {
     }
 
     private String formatTask(Task task) {
+        String type = task.getTaskType().getCode();
+        String done = task.getStatusIcon().equals("X") ? "1" : "0";
+
+        if (task instanceof Todo) {
+            return type + " | " + done + " | " + ((Todo) task).description;
+        } else if (task instanceof Deadline) {
+            Deadline deadline = (Deadline) task;
+            return type + " | " + done + " | " + deadline.description + " | " + deadline.by;
+        } else if (task instanceof Event) {
+            Event event = (Event) task;
+            return type + " | " + done + " | " + event.description + " | " + event.from + " | " + event.to;
+        }
+
         return "";
     }
 
