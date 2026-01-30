@@ -1,12 +1,12 @@
 package pixel.parser;
 
-import pixel.exception.PixelException;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import pixel.exception.PixelException;
 
 public class Parser {
     private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -59,11 +59,9 @@ public class Parser {
                 return LocalDateTime.of(date, LocalTime.of(23, 59));
             }
         } catch (DateTimeParseException e) {
-            throw new PixelException(
-                    "OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
+            throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new PixelException(
-                    "OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
+            throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }
     }
 

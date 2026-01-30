@@ -1,8 +1,7 @@
 package pixel.task;
 
 public enum TaskStatus {
-    DONE("X"),
-    NOT_DONE(" ");
+    DONE("X"), NOT_DONE(" ");
 
     private final String icon;
 

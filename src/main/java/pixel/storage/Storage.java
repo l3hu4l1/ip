@@ -1,11 +1,5 @@
 package pixel.storage;
 
-import pixel.exception.PixelException;
-import pixel.task.Deadline;
-import pixel.task.Event;
-import pixel.task.Task;
-import pixel.task.Todo;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import pixel.exception.PixelException;
+import pixel.task.Deadline;
 
 public class Storage {
     private final Path filePath;
@@ -85,11 +82,12 @@ public class Storage {
             return type + " | " + done + " | " + task.getDescription();
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
-            return type + " | " + done + " | " + deadline.getDescription() + " | " + deadline.getBy().format(STORAGE_FORMATTER);
+            return type + " | " + done + " | " + deadline.getDescription() + " | "
+                    + deadline.getBy().format(STORAGE_FORMATTER);
         } else if (task instanceof Event) {
             Event event = (Event) task;
-            return type + " | " + done + " | " + event.getDescription() + " | " + event.getFrom().format(STORAGE_FORMATTER)
-                    + " | " + event.getTo().format(STORAGE_FORMATTER);
+            return type + " | " + done + " | " + event.getDescription() + " | "
+                    + event.getFrom().format(STORAGE_FORMATTER) + " | " + event.getTo().format(STORAGE_FORMATTER);
         }
 
         return "";

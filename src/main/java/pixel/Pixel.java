@@ -1,5 +1,9 @@
 package pixel;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import pixel.exception.PixelException;
 import pixel.parser.Parser;
 import pixel.storage.Storage;
@@ -8,10 +12,6 @@ import pixel.task.Event;
 import pixel.task.Task;
 import pixel.task.Todo;
 import pixel.ui.Ui;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Pixel {
     private static final String FILE_PATH = "./data/pixel.txt";
