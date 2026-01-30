@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
     private final Path filePath;
+    private static final DateTimeFormatter STORAGE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -74,10 +77,11 @@ public class Storage {
             return type + " | " + done + " | " + ((Todo) task).description;
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
-            return type + " | " + done + " | " + deadline.description + " | " + deadline.by;
+            return type + " | " + done + " | " + deadline.description + " | " + deadline.by.format(STORAGE_FORMATTER);
         } else if (task instanceof Event) {
             Event event = (Event) task;
-            return type + " | " + done + " | " + event.description + " | " + event.from + " | " + event.to;
+            return type + " | " + done + " | " + event.description + " | " + event.from.format(STORAGE_FORMATTER)
+                    + " | " + event.to.format(STORAGE_FORMATTER);
         }
 
         return "";
@@ -102,12 +106,25 @@ public class Storage {
             break;
         case "D":
             if (parts.length >= 4) {
-                task = new Deadline(description, parts[3]);
+                try {
+                    LocalDateTime by = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
+                    task = new Deadline(description, by);
+                } catch (Exception e) {
+                    // If parsing fails, skip this task
+                    return null;
+                }
             }
             break;
         case "E":
             if (parts.length >= 5) {
-                task = new Event(description, parts[3], parts[4]);
+                try {
+                    LocalDateTime from = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
+                    LocalDateTime to = LocalDateTime.parse(parts[4], STORAGE_FORMATTER);
+                    task = new Event(description, from, to);
+                } catch (Exception e) {
+                    // If parsing fails, skip this task
+                    return null;
+                }
             }
             break;
         }

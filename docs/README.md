@@ -27,16 +27,16 @@ you restart the application.
 
 ## Commands Summary
 
-| Command       | Format                                  |
-| ------------- | --------------------------------------- |
-| Add todo      | `todo DESCRIPTION`                      |
-| Add deadline  | `deadline DESCRIPTION /by TIME`         |
-| Add event     | `event DESCRIPTION /from START /to END` |
-| List tasks    | `list`                                  |
-| Mark done     | `mark INDEX`                            |
-| Mark not done | `unmark INDEX`                          |
-| Delete task   | `delete INDEX`                          |
-| Exit          | `bye`                                   |
+| Command       | Format                                                            |
+| ------------- | ----------------------------------------------------------------- |
+| Add todo      | `todo DESCRIPTION`                                                |
+| Add deadline  | `deadline DESCRIPTION /by yyyy-MM-dd [HHmm]`                      |
+| Add event     | `event DESCRIPTION /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]` |
+| List tasks    | `list`                                                            |
+| Mark done     | `mark INDEX`                                                      |
+| Mark not done | `unmark INDEX`                                                    |
+| Delete task   | `delete INDEX`                                                    |
+| Exit          | `bye`                                                             |
 
 ## Feature Details
 
@@ -56,17 +56,17 @@ ____________________________________________________________
  Now you have 1 tasks in the list.
 ____________________________________________________________
 
-$ deadline return book /by Sunday
+$ deadline return book /by 2026-06-15 1800
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Jun 15 2026 18:00)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 
-$ event project meeting /from Mon 2pm /to 4pm
+$ event project meeting /from 2026-08-20 1400 /to 2026-08-20 1600
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ```
@@ -80,8 +80,8 @@ $ list
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] borrow book
- 2.[D][ ] return book (by: Sunday)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 2.[D][ ] return book (by: Jun 15 2026 18:00)
+ 3.[E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
 ____________________________________________________________
 ```
 
@@ -93,13 +93,13 @@ Track completion status with `[X]` for done and `[ ]` for not done:
 $ mark 2
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] return book (by: Sunday)
+   [D][X] return book (by: Jun 15 2026 18:00)
 ____________________________________________________________
 
 $ unmark 2
 ____________________________________________________________
  OK, I've marked this task as not done yet:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Jun 15 2026 18:00)
 ____________________________________________________________
 ```
 
@@ -111,7 +111,7 @@ Remove tasks you no longer need:
 $ delete 3
 ____________________________________________________________
  Noted. I've removed this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ```
@@ -129,13 +129,13 @@ this format:
 
 ```
 T | 1 | read book
-D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2pm | 4pm
+D | 0 | return book | 2026-06-06 1800
+E | 0 | project meeting | 2026-08-06 1400 | 2026-08-06 1600
 ```
 
 - First field: Task type (T/D/E)
 - Second field: Status (1=done, 0=not done)
-- Remaining fields: Task details
+- Remaining fields: Task details (dates stored as yyyy-MM-dd HHmm)
 
 ## Error Handling
 
