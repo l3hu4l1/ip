@@ -48,7 +48,7 @@ public class Parser {
      * Parses the description from a deadline command.
      *
      * @param input The full user input command (e.g., "deadline return book /by
-     *              2026-01-15")
+     * 2026-01-15")
      * @return The description of the deadline task
      * @throws PixelException If the description is empty
      */
@@ -68,7 +68,7 @@ public class Parser {
      * @param input The full user input command
      * @return The parsed deadline as a LocalDateTime
      * @throws PixelException If the /by parameter is missing, empty, or has an
-     *                        invalid date format
+     * invalid date format
      */
     public static LocalDateTime parseDeadlineBy(String input) throws PixelException {
         String rest = input.length() > DEADLINE_PREFIX_LENGTH ? input.substring(DEADLINE_PREFIX_LENGTH) : "";
@@ -84,11 +84,11 @@ public class Parser {
     }
 
     /**
-     * Parses a date/time string into a LocalDateTime object.
-     * Accepts formats: "yyyy-MM-dd" (defaults to 23:59) or "yyyy-MM-dd HHmm".
+     * Parses a date/time string into a LocalDateTime object. Accepts formats:
+     * "yyyy-MM-dd" (defaults to 23:59) or "yyyy-MM-dd HHmm".
      *
      * @param dateTimeStr The date/time string to parse (e.g., "2026-01-15" or
-     *                    "2026-01-15 1430")
+     * "2026-01-15 1430")
      * @return The parsed LocalDateTime
      * @throws PixelException If the date format is invalid
      */
@@ -112,11 +112,11 @@ public class Parser {
     /**
      * Parses the description from an event command.
      *
-     * @param input The full user input command (e.g., "event meeting /from ... /to
-     *              ...")
+     * @param input The full user input command (e.g., "event meeting /from ...
+     * /to ...")
      * @return The description of the event task
      * @throws PixelException If the description is empty or /from and /to are
-     *                        missing
+     * missing
      */
     public static String parseEventDescription(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -136,8 +136,8 @@ public class Parser {
      *
      * @param input The full user input command
      * @return The parsed start time as a LocalDateTime
-     * @throws PixelException If /from or /to is missing, empty, or has an invalid
-     *                        date format
+     * @throws PixelException If /from or /to is missing, empty, or has an
+     * invalid date format
      */
     public static LocalDateTime parseEventFrom(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -159,7 +159,7 @@ public class Parser {
      * @param input The full user input command
      * @return The parsed end time as a LocalDateTime
      * @throws PixelException If /to is missing, empty, or has an invalid date
-     *                        format
+     * format
      */
     public static LocalDateTime parseEventTo(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";

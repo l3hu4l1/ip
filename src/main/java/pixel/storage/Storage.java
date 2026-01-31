@@ -31,10 +31,11 @@ public class Storage {
     }
 
     /**
-     * Loads tasks from the storage file.
-     * Creates the directory structure if it doesn't exist.
+     * Loads tasks from the storage file. Creates the directory structure if it
+     * doesn't exist.
      *
-     * @return An ArrayList of tasks loaded from the file, or an empty list if the file doesn't exist
+     * @return An ArrayList of tasks loaded from the file, or an empty list if
+     * the file doesn't exist
      * @throws PixelException If there's an error reading the file
      */
     public ArrayList<Task> load() throws PixelException {
@@ -71,8 +72,8 @@ public class Storage {
     }
 
     /**
-     * Saves the given list of tasks to the storage file.
-     * Creates the directory structure if it doesn't exist.
+     * Saves the given list of tasks to the storage file. Creates the directory
+     * structure if it doesn't exist.
      *
      * @param tasks The list of tasks to save
      * @throws PixelException If there's an error writing to the file
@@ -112,19 +113,20 @@ public class Storage {
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
             return type + " | " + done + " | " + deadline.getDescription() + " | "
-                    + deadline.getBy().format(STORAGE_FORMATTER);
+                                            + deadline.getBy().format(STORAGE_FORMATTER);
         } else if (task instanceof Event) {
             Event event = (Event) task;
             return type + " | " + done + " | " + event.getDescription() + " | "
-                    + event.getFrom().format(STORAGE_FORMATTER) + " | " + event.getTo().format(STORAGE_FORMATTER);
+                                            + event.getFrom().format(STORAGE_FORMATTER) + " | "
+                                            + event.getTo().format(STORAGE_FORMATTER);
         }
 
         return "";
     }
 
     /**
-     * Parses a line from the storage file into a Task object.
-     * Handles different task types (Todo, Deadline, Event) and their specific formats.
+     * Parses a line from the storage file into a Task object. Handles different
+     * task types (Todo, Deadline, Event) and their specific formats.
      *
      * @param line The line to parse from the storage file
      * @return The parsed Task object, or null if parsing fails

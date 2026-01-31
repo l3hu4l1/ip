@@ -1,9 +1,9 @@
 package pixel.exception;
 
 /**
- * Custom exception class for Pixel application errors.
- * Used to handle application-specific error conditions such as
- * invalid input, missing parameters, or invalid task indices.
+ * Custom exception class for Pixel application errors. Used to handle
+ * application-specific error conditions such as invalid input, missing
+ * parameters, or invalid task indices.
  */
 public class PixelException extends Exception {
     /**

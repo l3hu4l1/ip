@@ -17,9 +17,9 @@ public class Pixel {
     private static final String FILE_PATH = "./data/pixel.txt";
 
     /**
-     * Entry point of the Pixel application.
-     * Initializes the task list, UI, and storage, then enters a command loop
-     * to process user input until the user enters 'bye'.
+     * Entry point of the Pixel application. Initializes the task list, UI, and
+     * storage, then enters a command loop to process user input until the user
+     * enters 'bye'.
      *
      * @param args Command line arguments (not used)
      */
