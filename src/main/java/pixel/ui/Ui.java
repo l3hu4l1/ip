@@ -58,4 +58,20 @@ public class Ui {
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
+
+    /**
+     * Prints the search results showing tasks that match the keyword.
+     *
+     * @param tasks The list of tasks that match the search keyword
+     */
+    public void printSearchResults(java.util.ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(" No matching tasks found.");
+        } else {
+            System.out.println(" Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(" " + (i + 1) + "." + tasks.get(i));
+            }
+        }
+    }
 }
