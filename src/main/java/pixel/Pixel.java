@@ -16,6 +16,13 @@ import pixel.ui.Ui;
 public class Pixel {
     private static final String FILE_PATH = "./data/pixel.txt";
 
+    /**
+     * Entry point of the Pixel application.
+     * Initializes the task list, UI, and storage, then enters a command loop
+     * to process user input until the user enters 'bye'.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         Ui ui = new Ui();
@@ -94,6 +101,13 @@ public class Pixel {
         ui.printFarewell();
     }
 
+    /**
+     * Validates that a task index is within valid bounds.
+     *
+     * @param taskIndex The zero-based index to validate
+     * @param taskCount The total number of tasks in the list
+     * @throws PixelException If the index is out of bounds
+     */
     private static void validateTaskIndex(int taskIndex, int taskCount) throws PixelException {
         if (taskIndex < 0 || taskIndex >= taskCount) {
             throw new PixelException("OOPS!!! The task index is invalid.");
