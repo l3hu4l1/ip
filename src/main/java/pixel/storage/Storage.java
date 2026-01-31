@@ -21,10 +21,22 @@ public class Storage {
     private final Path filePath;
     private static final DateTimeFormatter STORAGE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     *
+     * @param filePath The path to the file where tasks will be saved/loaded
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * Creates the directory structure if it doesn't exist.
+     *
+     * @return An ArrayList of tasks loaded from the file, or an empty list if the file doesn't exist
+     * @throws PixelException If there's an error reading the file
+     */
     public ArrayList<Task> load() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -58,6 +70,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the given list of tasks to the storage file.
+     * Creates the directory structure if it doesn't exist.
+     *
+     * @param tasks The list of tasks to save
+     * @throws PixelException If there's an error writing to the file
+     */
     public void save(ArrayList<Task> tasks) throws PixelException {
         try {
             Path directory = filePath.getParent();
@@ -77,6 +96,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Formats a task into a pipe-delimited string for storage.
+     * Format: TYPE | STATUS | DESCRIPTION | [EXTRA_FIELDS]
+     *
+     * @param task The task to format
+     * @return A formatted string representation of the task
+     */
     private String formatTask(Task task) {
         String type = task.getTaskType().getCode();
         String done = task.getStatusIcon().equals("X") ? "1" : "0";
@@ -96,6 +122,13 @@ public class Storage {
         return "";
     }
 
+    /**
+     * Parses a line from the storage file into a Task object.
+     * Handles different task types (Todo, Deadline, Event) and their specific formats.
+     *
+     * @param line The line to parse from the storage file
+     * @return The parsed Task object, or null if parsing fails
+     */
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
 
