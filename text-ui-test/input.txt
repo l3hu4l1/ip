@@ -8,5 +8,7 @@ unmark 2
 list
 delete 3
 list
-delete 5
+find book
+find meeting
+find xyz
 bye
