@@ -135,4 +135,22 @@ public class Parser {
             throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
         }
     }
+
+    /**
+     * Parses the keyword from a find command.
+     *
+     * @param input The full user input command (e.g., "find book")
+     * @return The search keyword
+     * @throws PixelException If the keyword is empty
+     */
+    public static String parseFindKeyword(String input) throws PixelException {
+        if (input.length() <= 4) {
+            throw new PixelException("OOPS!!! The search keyword cannot be empty.");
+        }
+        String keyword = input.substring(4).trim();
+        if (keyword.isEmpty()) {
+            throw new PixelException("OOPS!!! The search keyword cannot be empty.");
+        }
+        return keyword;
+    }
 }
