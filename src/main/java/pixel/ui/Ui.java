@@ -2,6 +2,10 @@ package pixel.ui;
 
 import pixel.task.Task;
 
+/**
+ * Handles all user interface interactions.
+ * Provides methods to print messages, task information, and format output for the user.
+ */
 public class Ui {
     private static final String LOGO = "  ____  _          _  \n"
             + "|  _ \\(_)_  _____| | \n"
@@ -10,6 +14,9 @@ public class Ui {
             + "|_|   |_/_/\\_\\___|_|";
     private static final String LINE = "____________________________________________________________";
 
+    /**
+     * Prints the welcome message and logo when the application starts.
+     */
     public void printWelcome() {
         System.out.println(LINE);
         System.out.println(" Hello! I'm\n" + LOGO);
@@ -17,25 +24,47 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Prints a farewell message when the user exits the application.
+     */
     public void printFarewell() {
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println(LINE);
     }
 
+    /**
+     * Prints an error message to the user.
+     *
+     * @param message The error message to display
+     */
     public void printError(String message) {
         System.out.println(" " + message);
     }
 
+    /**
+     * Prints a horizontal line separator.
+     */
     public void printLine() {
         System.out.println(LINE);
     }
 
+    /**
+     * Prints a confirmation message when a task is successfully added.
+     *
+     * @param task The task that was added
+     * @param taskCount The total number of tasks in the list
+     */
     public void printTaskAdded(Task task, int taskCount) {
         System.out.println(" Got it. I've added this task:");
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 
+    /**
+     * Prints all tasks in the task list with their index numbers.
+     *
+     * @param tasks The list of tasks to display
+     */
     public void printList(java.util.ArrayList<Task> tasks) {
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -43,16 +72,32 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints a confirmation message when a task is marked as done.
+     *
+     * @param task The task that was marked as done
+     */
     public void printTaskMarked(Task task) {
         System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task);
     }
 
+    /**
+     * Prints a confirmation message when a task is marked as not done.
+     *
+     * @param task The task that was unmarked
+     */
     public void printTaskUnmarked(Task task) {
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
     }
 
+    /**
+     * Prints a confirmation message when a task is deleted.
+     *
+     * @param task The task that was deleted
+     * @param taskCount The total number of remaining tasks in the list
+     */
     public void printTaskDeleted(Task task, int taskCount) {
         System.out.println(" Noted. I've removed this task:");
         System.out.println("   " + task);
