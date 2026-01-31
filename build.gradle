@@ -39,3 +39,15 @@ shadowJar {
 run{
     standardInput = System.in
 }
+
+tasks.named('clean') {
+    doLast {
+        def file = file('./data/pixel.txt')
+        if (file.exists()) {
+            file.text = '' // Clear the contents of the file
+            println("Cleared the data in pixel.txt")
+        } else {
+            println("File ip/data/pixel.txt does not exist, nothing to clear.")
+        }
+    }
+}

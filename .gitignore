@@ -21,3 +21,4 @@ text-ui-test/EXPECTED-UNIX.TXT
 /text-ui-test/data/
 /data/
 /docs/javadoc/
+eclipse-java-formatter.xml
