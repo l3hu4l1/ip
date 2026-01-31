@@ -87,6 +87,15 @@ public class Pixel {
                     Task task = tasks.remove(taskIndex);
                     ui.printTaskDeleted(task, tasks.size());
                     storage.save(tasks);
+                } else if (input.startsWith("find")) {
+                    String keyword = Parser.parseFindKeyword(input);
+                    ArrayList<Task> matchingTasks = new ArrayList<>();
+                    for (Task task : tasks) {
+                        if (task.getDescription().contains(keyword)) {
+                            matchingTasks.add(task);
+                        }
+                    }
+                    ui.printSearchResults(matchingTasks);
                 } else {
                     throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
