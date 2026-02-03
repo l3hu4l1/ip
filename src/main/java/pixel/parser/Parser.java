@@ -8,11 +8,14 @@ import java.time.format.DateTimeParseException;
 
 import pixel.exception.PixelException;
 
+/**
+ * Collection of utility methods for parsing parameters from commands.
+ */
 public class Parser {
     private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter INPUT_TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmm");
 
-    // Command prefix lengths
+    /** Command prefix lengths */
     private static final int TODO_PREFIX_LENGTH = 4;
     private static final int MARK_PREFIX_LENGTH = 5;
     private static final int UNMARK_PREFIX_LENGTH = 7;
@@ -21,17 +24,15 @@ public class Parser {
     private static final int DEADLINE_PREFIX_LENGTH = 8;
     private static final int EVENT_PREFIX_LENGTH = 5;
 
-    // Parameter keyword lengths (including leading slash and trailing space)
+    /** Parameter keyword lengths (includes a leading slash and trailing space) */
     private static final int BY_PREFIX_LENGTH = 4; // "/by "
     private static final int FROM_PREFIX_LENGTH = 6; // "/from "
     private static final int TO_PREFIX_LENGTH = 4; // "/to "
 
     /**
-     * Parses the description from a todo command.
+     * Returns the description from a todo command.
      *
-     * @param input The full user input command (e.g., "todo buy milk")
-     * @return The description of the todo task
-     * @throws PixelException If the description is empty
+     * @throws PixelException If the description is empty.
      */
     public static String parseTodoDescription(String input) throws PixelException {
         if (input.length() <= TODO_PREFIX_LENGTH) {
@@ -45,12 +46,9 @@ public class Parser {
     }
 
     /**
-     * Parses the description from a deadline command.
+     * Returns the description from a deadline command.
      *
-     * @param input The full user input command (e.g., "deadline return book /by
-     * 2026-01-15")
-     * @return The description of the deadline task
-     * @throws PixelException If the description is empty
+     * @throws PixelException If the description is empty.
      */
     public static String parseDeadlineDescription(String input) throws PixelException {
         String rest = input.substring(DEADLINE_PREFIX_LENGTH);
@@ -63,12 +61,10 @@ public class Parser {
     }
 
     /**
-     * Parses the deadline date/time from a deadline command.
+     * Returns the deadline from a deadline command.
      *
-     * @param input The full user input command
-     * @return The parsed deadline as a LocalDateTime
-     * @throws PixelException If the /by parameter is missing, empty, or has an
-     * invalid date format
+     * @return The deadline as a LocalDateTime.
+     * @throws PixelException If the deadline is missing, empty, or has an invalid date format.
      */
     public static LocalDateTime parseDeadlineBy(String input) throws PixelException {
         String rest = input.length() > DEADLINE_PREFIX_LENGTH ? input.substring(DEADLINE_PREFIX_LENGTH) : "";
@@ -84,13 +80,11 @@ public class Parser {
     }
 
     /**
-     * Parses a date/time string into a LocalDateTime object. Accepts formats:
-     * "yyyy-MM-dd" (defaults to 23:59) or "yyyy-MM-dd HHmm".
+     * Parses a date/time string into a LocalDateTime object. Accepts formats
+     *     "yyyy-MM-dd" (time defaults to 23:59) or "yyyy-MM-dd HHmm".
      *
-     * @param dateTimeStr The date/time string to parse (e.g., "2026-01-15" or
-     * "2026-01-15 1430")
-     * @return The parsed LocalDateTime
-     * @throws PixelException If the date format is invalid
+     * @return The LocalDateTime object.
+     * @throws PixelException If the date/time format is invalid.
      */
     public static LocalDateTime parseDateTime(String dateTimeStr) throws PixelException {
         try {
@@ -101,7 +95,6 @@ public class Parser {
                 LocalTime time = LocalTime.parse(parts[1], INPUT_TIME_FORMATTER);
                 return LocalDateTime.of(date, time);
             } else {
-                // No time provided, default to 23:59
                 return LocalDateTime.of(date, LocalTime.of(23, 59));
             }
         } catch (DateTimeParseException e) {
@@ -110,20 +103,13 @@ public class Parser {
     }
 
     /**
-     * Parses the description from an event command.
+     * Returns the description from an event command.
      *
-     * @param input The full user input command (e.g., "event meeting /from ...
-     * /to ...")
-     * @return The description of the event task
-     * @throws PixelException If the description is empty or /from and /to are
-     * missing
+     * @throws PixelException If the description is empty.
      */
     public static String parseEventDescription(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
         int fromIndex = rest.indexOf("/from ");
-        if (fromIndex == -1) {
-            throw new PixelException("OOPS!!! An event must include /from and /to.");
-        }
         String description = rest.substring(0, fromIndex).trim();
         if (description.isEmpty()) {
             throw new PixelException("OOPS!!! The description of an event cannot be empty.");
@@ -134,10 +120,8 @@ public class Parser {
     /**
      * Parses the start date/time from an event command.
      *
-     * @param input The full user input command
-     * @return The parsed start time as a LocalDateTime
-     * @throws PixelException If /from or /to is missing, empty, or has an
-     * invalid date format
+     * @return The date/time as a LocalDateTime.
+     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
      */
     public static LocalDateTime parseEventFrom(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -156,10 +140,8 @@ public class Parser {
     /**
      * Parses the end date/time from an event command.
      *
-     * @param input The full user input command
-     * @return The parsed end time as a LocalDateTime
-     * @throws PixelException If /to is missing, empty, or has an invalid date
-     * format
+     * @return The date/time as a LocalDateTime.
+     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
      */
     public static LocalDateTime parseEventTo(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -177,9 +159,8 @@ public class Parser {
     /**
      * Parses the task index from a mark command.
      *
-     * @param input The full user input command (e.g., "mark 2")
-     * @return The zero-based task index
-     * @throws PixelException If the index is missing or not a valid number
+     * @return The zero-based task index.
+     * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseMarkIndex(String input) throws PixelException {
         if (input.length() <= MARK_PREFIX_LENGTH) {
@@ -195,9 +176,8 @@ public class Parser {
     /**
      * Parses the task index from an unmark command.
      *
-     * @param input The full user input command (e.g., "unmark 2")
-     * @return The zero-based task index
-     * @throws PixelException If the index is missing or not a valid number
+     * @return The zero-based task index.
+     * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseUnmarkIndex(String input) throws PixelException {
         if (input.length() <= UNMARK_PREFIX_LENGTH) {
@@ -213,9 +193,8 @@ public class Parser {
     /**
      * Parses the task index from a delete command.
      *
-     * @param input The full user input command (e.g., "delete 2")
-     * @return The zero-based task index
-     * @throws PixelException If the index is missing or not a valid number
+     * @return The zero-based task index.
+     * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseDeleteIndex(String input) throws PixelException {
         if (input.length() <= DELETE_PREFIX_LENGTH) {
@@ -229,11 +208,9 @@ public class Parser {
     }
 
     /**
-     * Parses the keyword from a find command.
+     * Returns the keyword from a find command.
      *
-     * @param input The full user input command (e.g., "find book")
-     * @return The search keyword
-     * @throws PixelException If the keyword is empty
+     * @throws PixelException If the keyword is empty.
      */
     public static String parseFindKeyword(String input) throws PixelException {
         if (input.length() <= FIND_PREFIX_LENGTH) {

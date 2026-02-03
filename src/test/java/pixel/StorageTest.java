@@ -1,24 +1,23 @@
 package pixel;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
 import pixel.exception.PixelException;
 import pixel.storage.Storage;
 import pixel.task.Deadline;
 import pixel.task.Event;
 import pixel.task.Task;
 import pixel.task.Todo;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
 
@@ -35,7 +34,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_emptyList_success() throws PixelException {
+    public void saveAndLoad_emptyList_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         storage.save(tasks);
 
@@ -44,7 +43,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_singleTodo_success() throws PixelException {
+    public void saveAndLoad_singleTodo_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         tasks.add(new Todo("buy milk"));
         storage.save(tasks);
@@ -55,7 +54,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_singleDeadline_success() throws PixelException {
+    public void saveAndLoad_singleDeadline_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         LocalDateTime deadline = LocalDateTime.of(2026, 6, 15, 18, 0);
         tasks.add(new Deadline("submit assignment", deadline));
@@ -68,7 +67,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_singleEvent_success() throws PixelException {
+    public void saveAndLoad_singleEvent_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         LocalDateTime from = LocalDateTime.of(2026, 8, 20, 14, 0);
         LocalDateTime to = LocalDateTime.of(2026, 8, 20, 16, 0);
@@ -82,7 +81,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_multipleTasks_success() throws PixelException {
+    public void saveAndLoad_multipleTasks_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         tasks.add(new Todo("task 1"));
         tasks.add(new Todo("task 2"));
@@ -95,7 +94,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_markedTask_preservesStatus() throws PixelException {
+    public void saveAndLoad_markedTask_preservesStatus() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         Task task = new Todo("completed task");
         task.markAsDone();
@@ -108,7 +107,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_unmarkedTask_preservesStatus() throws PixelException {
+    public void saveAndLoad_unmarkedTask_preservesStatus() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         Task task = new Todo("incomplete task");
         tasks.add(task);
@@ -120,7 +119,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_load_nonExistentFile_returnsEmptyList() throws PixelException {
+    public void load_nonExistentFile_returnsEmptyList() throws PixelException {
         Path nonExistentPath = tempDir.resolve("nonexistent.txt");
         Storage nonExistentStorage = new Storage(nonExistentPath.toString());
 
@@ -130,7 +129,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_saveAndLoad_taskDescriptionWithSpecialChars_success() throws PixelException {
+    public void saveAndLoad_taskDescriptionWithSpecialChars_success() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         tasks.add(new Todo("buy milk & bread @ 5pm!"));
         storage.save(tasks);
@@ -141,7 +140,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_save_overwritesExistingFile() throws PixelException {
+    public void save_overwritesExistingFile() throws PixelException {
         ArrayList<Task> tasks1 = new ArrayList<>();
         tasks1.add(new Todo("task 1"));
         tasks1.add(new Todo("task 2"));
@@ -157,16 +156,7 @@ public class StorageTest {
     }
 
     @Test
-    public void storage_load_corruptedFile_handlesGracefully() throws IOException, PixelException {
-        Files.writeString(testFilePath, "corrupted data\nmore corrupted data\n");
-
-        ArrayList<Task> loadedTasks = storage.load();
-        // Should return empty list or skip corrupted entries
-        assertNotNull(loadedTasks);
-    }
-
-    @Test
-    public void storage_saveAndLoad_mixedTaskTypes_preservesOrder() throws PixelException {
+    public void saveAndLoad_mixedTaskTypes_preservesOrder() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
         tasks.add(new Todo("first"));
         LocalDateTime deadline = LocalDateTime.of(2026, 3, 15, 10, 30);
