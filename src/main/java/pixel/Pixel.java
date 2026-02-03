@@ -13,15 +13,15 @@ import pixel.task.Task;
 import pixel.task.Todo;
 import pixel.ui.Ui;
 
+/**
+ * Main entry point for the Pixel application.
+ */
 public class Pixel {
     private static final String FILE_PATH = "./data/pixel.txt";
 
     /**
-     * Entry point of the Pixel application. Initializes the task list, UI, and
-     * storage, then enters a command loop to process user input until the user
-     * enters 'bye'.
-     *
-     * @param args Command line arguments (not used)
+     * Initializes the task list, UI, and storage, then enters a command loop
+     *     to process user input until the user enters 'bye'.
      */
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -74,9 +74,9 @@ public class Pixel {
                     ui.printTaskAdded(task, tasks.size());
                     storage.save(tasks);
                 } else if (input.startsWith("event")) {
-                    String description = Parser.parseEventDescription(input);
-                    LocalDateTime from = Parser.parseEventFrom(input);
                     LocalDateTime to = Parser.parseEventTo(input);
+                    LocalDateTime from = Parser.parseEventFrom(input);
+                    String description = Parser.parseEventDescription(input);
                     Task task = new Event(description, from, to);
                     tasks.add(task);
                     ui.printTaskAdded(task, tasks.size());
@@ -111,7 +111,7 @@ public class Pixel {
     }
 
     /**
-     * Validates that a task index is within valid bounds.
+     * Checks that a task index is within valid bounds.
      *
      * @param taskIndex The zero-based index to validate
      * @param taskCount The total number of tasks in the list

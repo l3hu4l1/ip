@@ -17,9 +17,12 @@ import pixel.task.Event;
 import pixel.task.Task;
 import pixel.task.Todo;
 
+/**
+ * Class responsible for loading and saving tasks to a file.
+ */
 public class Storage {
-    private final Path filePath;
     private static final DateTimeFormatter STORAGE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private final Path filePath;
 
     /**
      * Creates a new Storage instance with the specified file path.
@@ -34,8 +37,7 @@ public class Storage {
      * Loads tasks from the storage file. Creates the directory structure if it
      * doesn't exist.
      *
-     * @return An ArrayList of tasks loaded from the file, or an empty list if
-     * the file doesn't exist
+     * @return An ArrayList of tasks loaded from the file, or an empty list if the file doesn't exist
      * @throws PixelException If there's an error reading the file
      */
     public ArrayList<Task> load() throws PixelException {
@@ -47,7 +49,6 @@ public class Storage {
                 Files.createDirectories(directory);
             }
 
-            // If file doesn't exist, return empty list
             if (!Files.exists(filePath)) {
                 return tasks;
             }
@@ -75,7 +76,6 @@ public class Storage {
      * Saves the given list of tasks to the storage file. Creates the directory
      * structure if it doesn't exist.
      *
-     * @param tasks The list of tasks to save
      * @throws PixelException If there's an error writing to the file
      */
     public void save(ArrayList<Task> tasks) throws PixelException {
@@ -100,9 +100,6 @@ public class Storage {
     /**
      * Formats a task into a pipe-delimited string for storage.
      * Format: TYPE | STATUS | DESCRIPTION | [EXTRA_FIELDS]
-     *
-     * @param task The task to format
-     * @return A formatted string representation of the task
      */
     private String formatTask(Task task) {
         String type = task.getTaskType().getCode();
@@ -125,10 +122,8 @@ public class Storage {
     }
 
     /**
-     * Parses a line from the storage file into a Task object. Handles different
-     * task types (Todo, Deadline, Event) and their specific formats.
+     * Parses a line from the storage file into a Task object. Handles each task type by its specific format.
      *
-     * @param line The line to parse from the storage file
      * @return The parsed Task object, or null if parsing fails
      */
     private Task parseTask(String line) {
@@ -154,8 +149,7 @@ public class Storage {
                     LocalDateTime by = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
                     task = new Deadline(description, by);
                 } catch (Exception e) {
-                    // If parsing fails, skip this task
-                    return null;
+                    return null; // If parsing fails, skip this task
                 }
             }
             break;
@@ -166,11 +160,13 @@ public class Storage {
                     LocalDateTime to = LocalDateTime.parse(parts[4], STORAGE_FORMATTER);
                     task = new Event(description, from, to);
                 } catch (Exception e) {
-                    // If parsing fails, skip this task
                     return null;
                 }
             }
             break;
+
+        default:
+            return null;
         }
 
         if (task != null && isDone) {
