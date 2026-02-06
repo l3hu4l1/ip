@@ -51,7 +51,7 @@ public class MainWindow extends AnchorPane {
                                         DialogBox.getPixelDialog(response, pixelImage));
         userInput.clear();
 
-        if (input.equals("bye")) {
+        if (pixel.toExit()) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
             delay.setOnFinished(event -> Platform.exit());
             delay.play();

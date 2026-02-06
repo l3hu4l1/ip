@@ -9,6 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pixel.Pixel;
 
+/**
+ * Entry point for the application.
+ */
 public class Main extends Application {
 
     private final Pixel pixel = new Pixel();
