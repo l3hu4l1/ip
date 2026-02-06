@@ -21,6 +21,7 @@ public class Pixel {
     private ArrayList<Task> tasks;
     private final ResponseFormatter responseFormatter;
     private final Storage storage;
+    private boolean toExit = false;
 
     /**
      * Creates a new Pixel instance and loads existing tasks from storage.
@@ -50,6 +51,7 @@ public class Pixel {
     public String getResponse(String input) {
         try {
             if (input.equals("bye")) {
+                toExit = true;
                 return responseFormatter.getFarewellMessage();
             } else if (input.equals("list")) {
                 return responseFormatter.getListMessage(tasks);
@@ -120,5 +122,9 @@ public class Pixel {
         if (taskIndex < 0 || taskIndex >= taskCount) {
             throw new PixelException("OOPS!!! The task index is invalid.");
         }
+    }
+
+    public boolean toExit() {
+        return toExit;
     }
 }
