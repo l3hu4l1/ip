@@ -1,17 +1,25 @@
 package pixel.response;
 
+import java.util.ArrayList;
+
 import pixel.task.Task;
 
 /**
  * Provides methods to generate formatted response messages.
  */
 public class ResponseFormatter {
-    public String getFarewellMessage() {
-        return "Bye. Hope to see you again soon!";
+    private String getListString(ArrayList<Task> tasks, StringBuilder sb) {
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append((i + 1)).append(".").append(tasks.get(i));
+            if (i < tasks.size() - 1) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 
-    public String getErrorMessage(String message) {
-        return message;
+    public String getFarewellMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 
     public String getTaskAddedMessage(Task task, int taskCount) {
@@ -23,13 +31,7 @@ public class ResponseFormatter {
             return "Your task list is empty.";
         }
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append((i + 1)).append(".").append(tasks.get(i));
-            if (i < tasks.size() - 1) {
-                sb.append("\n");
-            }
-        }
-        return sb.toString();
+        return getListString(tasks, sb);
     }
 
     public String getTaskMarkedMessage(Task task) {
@@ -61,12 +63,6 @@ public class ResponseFormatter {
             return "No matching tasks found.";
         }
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append((i + 1)).append(".").append(tasks.get(i));
-            if (i < tasks.size() - 1) {
-                sb.append("\n");
-            }
-        }
-        return sb.toString();
+        return getListString(tasks, sb);
     }
 }

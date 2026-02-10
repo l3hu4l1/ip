@@ -25,8 +25,6 @@ public class DialogBox extends HBox {
 
     /**
      * Creates a new DialogBox with the specified text and image.
-     * @param text
-     * @param img
      */
     public DialogBox(String text, Image img) {
         try {

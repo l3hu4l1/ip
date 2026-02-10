@@ -1,5 +1,7 @@
 package pixel.ui;
 
+import java.util.Objects;
+
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,17 +17,17 @@ import pixel.Pixel;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+            "/images/DaUser.png")));
+    private final Image pixelImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+            "/images/DaPixel.png")));
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-
     private Pixel pixel;
-
-    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image pixelImage = new Image(this.getClass().getResourceAsStream("/images/DaPixel.png"));
 
     @FXML
     public void initialize() {
@@ -47,8 +49,9 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = pixel.getResponse(input);
-        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
-                                        DialogBox.getPixelDialog(response, pixelImage));
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getPixelDialog(response, pixelImage));
         userInput.clear();
 
         if (pixel.toExit()) {

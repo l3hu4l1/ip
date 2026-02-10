@@ -13,14 +13,14 @@ import pixel.task.Task;
 import pixel.task.Todo;
 
 /**
- * Represents logic for handling user input.
+ * Represents top-level logic.
  */
 public class Pixel {
     private static final String FILE_PATH = "./data/pixel.txt";
     private static final String welcomeMessage = "Hello! I'm Pixel.\nWhat can I do for you?";
-    private ArrayList<Task> tasks;
     private final ResponseFormatter responseFormatter;
     private final Storage storage;
+    private ArrayList<Task> tasks;
     private boolean toExit = false;
 
     /**
@@ -43,10 +43,7 @@ public class Pixel {
     }
 
     /**
-     * Generates a response for the user's input.
-     *
-     * @param input The user's input command
-     * @return The response message to display
+     * Generates a response to the user's input.
      */
     public String getResponse(String input) {
         try {
@@ -107,12 +104,12 @@ public class Pixel {
                 throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
         } catch (PixelException e) {
-            return responseFormatter.getErrorMessage(e.getMessage());
+            return e.getMessage();
         }
     }
 
     /**
-     * Validates that a task index is within valid bounds.
+     * Validates that a task index is within bounds.
      *
      * @param taskIndex The zero-based index to validate
      * @param taskCount The total number of tasks in the list
