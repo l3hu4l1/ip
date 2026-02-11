@@ -27,6 +27,7 @@ public class ResponseFormatter {
     }
 
     public String getListMessage(java.util.ArrayList<Task> tasks) {
+        assert tasks != null : "Task list should not be null";
         if (tasks.isEmpty()) {
             return "Your task list is empty.";
         }

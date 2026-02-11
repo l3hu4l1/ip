@@ -16,6 +16,9 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
+        assert from != null : "Event start date/time cannot be null";
+        assert to != null : "Event end date/time cannot be null";
+        assert from.isBefore(to) || from.isEqual(to) : "Event start time should not be after end time";
         this.from = from;
         this.to = to;
     }
@@ -24,6 +27,7 @@ public class Event extends Task {
      * Gets the start date and time of the event.
      */
     public LocalDateTime getFrom() {
+        assert from != null : "Event start date/time should never be null after construction";
         return from;
     }
 
@@ -31,6 +35,7 @@ public class Event extends Task {
      * Gets the end date and time of the event.
      */
     public LocalDateTime getTo() {
+        assert to != null : "Event end date/time should never be null after construction";
         return to;
     }
 

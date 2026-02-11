@@ -91,12 +91,15 @@ public class Parser {
             String[] parts = dateTimeStr.split(" ");
             LocalDate date = LocalDate.parse(parts[0], INPUT_DATE_FORMATTER);
 
+            LocalDateTime result;
             if (parts.length > 1) {
                 LocalTime time = LocalTime.parse(parts[1], INPUT_TIME_FORMATTER);
-                return LocalDateTime.of(date, time);
+                result = LocalDateTime.of(date, time);
             } else {
-                return LocalDateTime.of(date, LocalTime.of(23, 59));
+                result = LocalDateTime.of(date, LocalTime.of(23, 59));
             }
+            assert result != null : "parseDateTime should never return null";
+            return result;
         } catch (DateTimeParseException e) {
             throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }
@@ -167,7 +170,9 @@ public class Parser {
             throw new PixelException("OOPS!!! Please provide a valid task number to mark.");
         }
         try {
-            return Integer.parseInt(input.substring(MARK_PREFIX_LENGTH).trim()) - 1;
+            int index = Integer.parseInt(input.substring(MARK_PREFIX_LENGTH).trim()) - 1;
+            assert index >= -1 : "Parsed index should be >= -1 (since we subtract 1)";
+            return index;
         } catch (NumberFormatException e) {
             throw new PixelException("OOPS!!! Please provide a valid task number to mark.");
         }
@@ -184,7 +189,9 @@ public class Parser {
             throw new PixelException("OOPS!!! Please provide a valid task number to unmark.");
         }
         try {
-            return Integer.parseInt(input.substring(UNMARK_PREFIX_LENGTH).trim()) - 1;
+            int index = Integer.parseInt(input.substring(UNMARK_PREFIX_LENGTH).trim()) - 1;
+            assert index >= -1 : "Parsed index should be >= -1 (since we subtract 1)";
+            return index;
         } catch (NumberFormatException e) {
             throw new PixelException("OOPS!!! Please provide a valid task number to unmark.");
         }
@@ -201,7 +208,9 @@ public class Parser {
             throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
         }
         try {
-            return Integer.parseInt(input.substring(DELETE_PREFIX_LENGTH).trim()) - 1;
+            int index = Integer.parseInt(input.substring(DELETE_PREFIX_LENGTH).trim()) - 1;
+            assert index >= -1 : "Parsed index should be >= -1 (since we subtract 1)";
+            return index;
         } catch (NumberFormatException e) {
             throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
         }
@@ -220,6 +229,7 @@ public class Parser {
         if (keyword.isEmpty()) {
             throw new PixelException("OOPS!!! The search keyword cannot be empty.");
         }
+        assert !keyword.isEmpty() : "Keyword should not be empty after validation";
         return keyword;
     }
 }
