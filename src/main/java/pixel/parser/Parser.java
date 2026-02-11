@@ -97,12 +97,15 @@ public class Parser {
             String[] parts = dateTimeStr.split(" ");
             LocalDate date = LocalDate.parse(parts[0], INPUT_DATE_FORMATTER);
 
+            LocalDateTime result;
             if (parts.length > 1) {
                 LocalTime time = LocalTime.parse(parts[1], INPUT_TIME_FORMATTER);
-                return LocalDateTime.of(date, time);
+                result = LocalDateTime.of(date, time);
             } else {
-                return LocalDateTime.of(date, LocalTime.of(23, 59));
+                result = LocalDateTime.of(date, LocalTime.of(23, 59));
             }
+            assert result != null : "parseDateTime should never return null";
+            return result;
         } catch (DateTimeParseException e) {
             throw new PixelException("OOPS!!! Invalid date format. Use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }
@@ -221,6 +224,7 @@ public class Parser {
         if (keyword.isEmpty()) {
             throw new PixelException("OOPS!!! The search keyword cannot be empty.");
         }
+        assert !keyword.isEmpty() : "Keyword should not be empty after validation";
         return keyword;
     }
 }
