@@ -227,4 +227,24 @@ public class Parser {
         assert !keyword.isEmpty() : "Keyword should not be empty after validation";
         return keyword;
     }
+
+    /**
+     * Checks if a task description matches the search criteria. Performs
+     * case-insensitive substring matching. Multiple keywords are treated as AND
+     * logic (all must match).
+     *
+     * @param description The task description to search in.
+     * @param searchCriteria Keywords separated by spaces.
+     * @return True if all keywords match (case-insensitive), false otherwise.
+     */
+    public static boolean matchesSearchCriteria(String description, String searchCriteria) {
+        String lowerDescription = description.toLowerCase();
+        String[] keywords = searchCriteria.toLowerCase().split("\\s+");
+        for (String keyword : keywords) {
+            if (!lowerDescription.contains(keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
