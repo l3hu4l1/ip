@@ -69,8 +69,7 @@ public class Parser {
      * Returns the deadline from a deadline command.
      *
      * @return The deadline as a LocalDateTime.
-     * @throws PixelException If the deadline is missing, empty, or has an
-     * invalid date format.
+     * @throws PixelException If the deadline is missing, empty, or has an invalid date format.
      */
     public static LocalDateTime parseDeadlineBy(String input) throws PixelException {
         String rest = input.length() > DEADLINE_PREFIX_LENGTH ? input.substring(DEADLINE_PREFIX_LENGTH) : "";
@@ -133,8 +132,7 @@ public class Parser {
      * Parses the start date/time from an event command.
      *
      * @return The date/time as a LocalDateTime.
-     * @throws PixelException If this date/time is missing, empty, or has an
-     * invalid format.
+     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
      */
     public static LocalDateTime parseEventFrom(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -154,8 +152,7 @@ public class Parser {
      * Parses the end date/time from an event command.
      *
      * @return The date/time as a LocalDateTime.
-     * @throws PixelException If this date/time is missing, empty, or has an
-     * invalid format.
+     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
      */
     public static LocalDateTime parseEventTo(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";

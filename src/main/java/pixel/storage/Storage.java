@@ -37,8 +37,7 @@ public class Storage {
      * Loads tasks from the storage file. Creates the directory structure if it
      * doesn't exist.
      *
-     * @return An ArrayList of tasks loaded from the file, or an empty list if
-     * the file doesn't exist
+     * @return An ArrayList of tasks loaded from the file, or an empty list if the file doesn't exist
      * @throws PixelException If there's an error reading the file
      */
     public ArrayList<Task> load() throws PixelException {
@@ -136,7 +135,7 @@ public class Storage {
 
         String type = parts[0];
         assert type != null : "Task type should not be null";
-        
+
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
         assert description != null : "Task description should not be null";
