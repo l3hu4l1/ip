@@ -8,9 +8,10 @@ import pixel.task.Task;
  * Provides methods to generate formatted response messages.
  */
 public class ResponseFormatter {
-    private String getListString(ArrayList<Task> tasks, StringBuilder sb) {
+    private String formatTaskList(ArrayList<Task> tasks, String header) {
+        StringBuilder sb = new StringBuilder(header);
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append((i + 1)).append(".").append(tasks.get(i));
+            sb.append(i + 1).append(".").append(tasks.get(i));
             if (i < tasks.size() - 1) {
                 sb.append("\n");
             }
@@ -26,13 +27,11 @@ public class ResponseFormatter {
         return "Got it. I've added this task:\n  " + task + "\nNow you have " + taskCount + " tasks in the list.";
     }
 
-    public String getListMessage(java.util.ArrayList<Task> tasks) {
-        assert tasks != null : "Task list should not be null";
+    public String getListMessage(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             return "Your task list is empty.";
         }
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        return getListString(tasks, sb);
+        return formatTaskList(tasks, "Here are the tasks in your list:\n");
     }
 
     public String getTaskMarkedMessage(Task task) {
@@ -59,11 +58,10 @@ public class ResponseFormatter {
      *
      * @param tasks The list of matching tasks
      */
-    public String getSearchResultsMessage(java.util.ArrayList<Task> tasks) {
+    public String getSearchResultsMessage(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             return "No matching tasks found.";
         }
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-        return getListString(tasks, sb);
+        return formatTaskList(tasks, "Here are the matching tasks in your list:\n");
     }
 }

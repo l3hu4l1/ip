@@ -37,17 +37,15 @@ public class Storage {
      * Loads tasks from the storage file. Creates the directory structure if it
      * doesn't exist.
      *
-     * @return An ArrayList of tasks loaded from the file, or an empty list if the file doesn't exist
+     * @return An ArrayList of tasks loaded from the file, or an empty list if
+     * the file doesn't exist
      * @throws PixelException If there's an error reading the file
      */
     public ArrayList<Task> load() throws PixelException {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            Path directory = filePath.getParent();
-            if (directory != null && !Files.exists(directory)) {
-                Files.createDirectories(directory);
-            }
+            ensureDirectoryExists();
 
             if (!Files.exists(filePath)) {
                 assert tasks != null : "Task list should never be null";
@@ -55,17 +53,15 @@ public class Storage {
             }
 
             File file = filePath.toFile();
-            Scanner scanner = new Scanner(file);
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = parseTask(line);
-                if (task != null) {
-                    tasks.add(task);
+            try (Scanner scanner = new Scanner(file)) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    Task task = parseTask(line);
+                    if (task != null) {
+                        tasks.add(task);
+                    }
                 }
             }
-
-            scanner.close();
         } catch (IOException e) {
             throw new PixelException("Error loading tasks from file: " + e.getMessage());
         }
@@ -82,26 +78,28 @@ public class Storage {
      */
     public void save(ArrayList<Task> tasks) throws PixelException {
         try {
-            Path directory = filePath.getParent();
-            if (directory != null && !Files.exists(directory)) {
-                Files.createDirectories(directory);
+            ensureDirectoryExists();
+
+            try (FileWriter writer = new FileWriter(filePath.toFile())) {
+                for (Task task : tasks) {
+                    writer.write(formatTask(task) + System.lineSeparator());
+                }
             }
-
-            FileWriter writer = new FileWriter(filePath.toFile());
-
-            for (Task task : tasks) {
-                writer.write(formatTask(task) + System.lineSeparator());
-            }
-
-            writer.close();
         } catch (IOException e) {
             throw new PixelException("Error saving tasks to file: " + e.getMessage());
         }
     }
 
+    private void ensureDirectoryExists() throws IOException {
+        Path directory = filePath.getParent();
+        if (directory != null && !Files.exists(directory)) {
+            Files.createDirectories(directory);
+        }
+    }
+
     /**
-     * Formats a task into a pipe-delimited string for storage.
-     * Format: TYPE | STATUS | DESCRIPTION | [EXTRA_FIELDS]
+     * Formats a task into a pipe-delimited string for storage. Format: TYPE |
+     * STATUS | DESCRIPTION | [EXTRA_FIELDS]
      */
     private String formatTask(Task task) {
         String type = task.getTaskType().getCode();
@@ -124,7 +122,8 @@ public class Storage {
     }
 
     /**
-     * Parses a line from the storage file into a Task object. Handles each task type by its specific format.
+     * Parses a line from the storage file into a Task object. Handles each task
+     * type by its specific format.
      *
      * @return The parsed Task object, or null if parsing fails
      */
