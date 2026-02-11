@@ -47,36 +47,37 @@ public class Pixel {
      */
     public String getResponse(String input) {
         try {
+            String response = null;
             if (input.equals("bye")) {
                 toExit = true;
-                return responseFormatter.getFarewellMessage();
+                response = responseFormatter.getFarewellMessage();
             } else if (input.equals("list")) {
-                return responseFormatter.getListMessage(tasks);
+                response = responseFormatter.getListMessage(tasks);
             } else if (input.startsWith("mark")) {
                 int taskIndex = Parser.parseMarkIndex(input);
                 validateTaskIndex(taskIndex, tasks.size());
                 tasks.get(taskIndex).markAsDone();
                 storage.save(tasks);
-                return responseFormatter.getTaskMarkedMessage(tasks.get(taskIndex));
+                response = responseFormatter.getTaskMarkedMessage(tasks.get(taskIndex));
             } else if (input.startsWith("unmark")) {
                 int taskIndex = Parser.parseUnmarkIndex(input);
                 validateTaskIndex(taskIndex, tasks.size());
                 tasks.get(taskIndex).markAsNotDone();
                 storage.save(tasks);
-                return responseFormatter.getTaskUnmarkedMessage(tasks.get(taskIndex));
+                response = responseFormatter.getTaskUnmarkedMessage(tasks.get(taskIndex));
             } else if (input.startsWith("todo")) {
                 String description = Parser.parseTodoDescription(input);
                 Task task = new Todo(description);
                 tasks.add(task);
                 storage.save(tasks);
-                return responseFormatter.getTaskAddedMessage(task, tasks.size());
+                response = responseFormatter.getTaskAddedMessage(task, tasks.size());
             } else if (input.startsWith("deadline")) {
                 String description = Parser.parseDeadlineDescription(input);
                 LocalDateTime by = Parser.parseDeadlineBy(input);
                 Task task = new Deadline(description, by);
                 tasks.add(task);
                 storage.save(tasks);
-                return responseFormatter.getTaskAddedMessage(task, tasks.size());
+                response = responseFormatter.getTaskAddedMessage(task, tasks.size());
             } else if (input.startsWith("event")) {
                 String description = Parser.parseEventDescription(input);
                 LocalDateTime from = Parser.parseEventFrom(input);
@@ -84,13 +85,13 @@ public class Pixel {
                 Task task = new Event(description, from, to);
                 tasks.add(task);
                 storage.save(tasks);
-                return responseFormatter.getTaskAddedMessage(task, tasks.size());
+                response = responseFormatter.getTaskAddedMessage(task, tasks.size());
             } else if (input.startsWith("delete")) {
                 int taskIndex = Parser.parseDeleteIndex(input);
                 validateTaskIndex(taskIndex, tasks.size());
                 Task task = tasks.remove(taskIndex);
                 storage.save(tasks);
-                return responseFormatter.getTaskDeletedMessage(task, tasks.size());
+                response = responseFormatter.getTaskDeletedMessage(task, tasks.size());
             } else if (input.startsWith("find")) {
                 String keyword = Parser.parseFindKeyword(input);
                 ArrayList<Task> matchingTasks = new ArrayList<>();
@@ -99,12 +100,16 @@ public class Pixel {
                         matchingTasks.add(task);
                     }
                 }
-                return responseFormatter.getSearchResultsMessage(matchingTasks);
+                response = responseFormatter.getSearchResultsMessage(matchingTasks);
             } else {
                 throw new PixelException("OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
+            assert response != null : "Response should never be null";
+            return response;
         } catch (PixelException e) {
-            return e.getMessage();
+            String errorMessage = e.getMessage();
+            assert errorMessage != null : "Error message should not be null";
+            return errorMessage;
         }
     }
 

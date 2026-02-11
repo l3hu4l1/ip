@@ -50,6 +50,7 @@ public class Storage {
             }
 
             if (!Files.exists(filePath)) {
+                assert tasks != null : "Task list should never be null";
                 return tasks;
             }
 
@@ -69,6 +70,7 @@ public class Storage {
             throw new PixelException("Error loading tasks from file: " + e.getMessage());
         }
 
+        assert tasks != null : "Task list should never be null after load()";
         return tasks;
     }
 
@@ -134,8 +136,11 @@ public class Storage {
         }
 
         String type = parts[0];
+        assert type != null : "Task type should not be null";
+        
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
+        assert description != null : "Task description should not be null";
 
         Task task = null;
 
@@ -147,6 +152,7 @@ public class Storage {
             if (parts.length >= 4) {
                 try {
                     LocalDateTime by = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
+                    assert by != null : "Parsed deadline date should not be null";
                     task = new Deadline(description, by);
                 } catch (Exception e) {
                     return null; // If parsing fails, skip this task
@@ -158,6 +164,8 @@ public class Storage {
                 try {
                     LocalDateTime from = LocalDateTime.parse(parts[3], STORAGE_FORMATTER);
                     LocalDateTime to = LocalDateTime.parse(parts[4], STORAGE_FORMATTER);
+                    assert from != null : "Parsed event start date should not be null";
+                    assert to != null : "Parsed event end date should not be null";
                     task = new Event(description, from, to);
                 } catch (Exception e) {
                     return null;
