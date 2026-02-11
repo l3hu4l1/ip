@@ -24,7 +24,9 @@ public class Parser {
     private static final int DEADLINE_PREFIX_LENGTH = 8;
     private static final int EVENT_PREFIX_LENGTH = 5;
 
-    /** Parameter keyword lengths (includes a leading slash and trailing space) */
+    /**
+     * Parameter keyword lengths (includes a leading slash and trailing space)
+     */
     private static final int BY_PREFIX_LENGTH = 4; // "/by "
     private static final int FROM_PREFIX_LENGTH = 6; // "/from "
     private static final int TO_PREFIX_LENGTH = 4; // "/to "
@@ -53,6 +55,9 @@ public class Parser {
     public static String parseDeadlineDescription(String input) throws PixelException {
         String rest = input.substring(DEADLINE_PREFIX_LENGTH);
         int byIndex = rest.indexOf("/by ");
+        if (byIndex == -1) {
+            throw new PixelException("OOPS!!! A deadline must include /by.");
+        }
         String description = rest.substring(0, byIndex).trim();
         if (description.isEmpty()) {
             throw new PixelException("OOPS!!! The description of a deadline cannot be empty.");
@@ -64,7 +69,8 @@ public class Parser {
      * Returns the deadline from a deadline command.
      *
      * @return The deadline as a LocalDateTime.
-     * @throws PixelException If the deadline is missing, empty, or has an invalid date format.
+     * @throws PixelException If the deadline is missing, empty, or has an
+     * invalid date format.
      */
     public static LocalDateTime parseDeadlineBy(String input) throws PixelException {
         String rest = input.length() > DEADLINE_PREFIX_LENGTH ? input.substring(DEADLINE_PREFIX_LENGTH) : "";
@@ -81,7 +87,7 @@ public class Parser {
 
     /**
      * Parses a date/time string into a LocalDateTime object. Accepts formats
-     *     "yyyy-MM-dd" (time defaults to 23:59) or "yyyy-MM-dd HHmm".
+     * "yyyy-MM-dd" (time defaults to 23:59) or "yyyy-MM-dd HHmm".
      *
      * @return The LocalDateTime object.
      * @throws PixelException If the date/time format is invalid.
@@ -110,6 +116,9 @@ public class Parser {
     public static String parseEventDescription(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
         int fromIndex = rest.indexOf("/from ");
+        if (fromIndex == -1) {
+            throw new PixelException("OOPS!!! An event must include /from and /to.");
+        }
         String description = rest.substring(0, fromIndex).trim();
         if (description.isEmpty()) {
             throw new PixelException("OOPS!!! The description of an event cannot be empty.");
@@ -121,7 +130,8 @@ public class Parser {
      * Parses the start date/time from an event command.
      *
      * @return The date/time as a LocalDateTime.
-     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
+     * @throws PixelException If this date/time is missing, empty, or has an
+     * invalid format.
      */
     public static LocalDateTime parseEventFrom(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -141,7 +151,8 @@ public class Parser {
      * Parses the end date/time from an event command.
      *
      * @return The date/time as a LocalDateTime.
-     * @throws PixelException If this date/time is missing, empty, or has an invalid format.
+     * @throws PixelException If this date/time is missing, empty, or has an
+     * invalid format.
      */
     public static LocalDateTime parseEventTo(String input) throws PixelException {
         String rest = input.length() > EVENT_PREFIX_LENGTH ? input.substring(EVENT_PREFIX_LENGTH) : "";
@@ -163,14 +174,7 @@ public class Parser {
      * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseMarkIndex(String input) throws PixelException {
-        if (input.length() <= MARK_PREFIX_LENGTH) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to mark.");
-        }
-        try {
-            return Integer.parseInt(input.substring(MARK_PREFIX_LENGTH).trim()) - 1;
-        } catch (NumberFormatException e) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to mark.");
-        }
+        return parseIndex(input, MARK_PREFIX_LENGTH, "OOPS!!! Please provide a valid task number to mark.");
     }
 
     /**
@@ -180,14 +184,7 @@ public class Parser {
      * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseUnmarkIndex(String input) throws PixelException {
-        if (input.length() <= UNMARK_PREFIX_LENGTH) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to unmark.");
-        }
-        try {
-            return Integer.parseInt(input.substring(UNMARK_PREFIX_LENGTH).trim()) - 1;
-        } catch (NumberFormatException e) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to unmark.");
-        }
+        return parseIndex(input, UNMARK_PREFIX_LENGTH, "OOPS!!! Please provide a valid task number to unmark.");
     }
 
     /**
@@ -197,13 +194,17 @@ public class Parser {
      * @throws PixelException If the index is missing or not a valid number.
      */
     public static int parseDeleteIndex(String input) throws PixelException {
-        if (input.length() <= DELETE_PREFIX_LENGTH) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
+        return parseIndex(input, DELETE_PREFIX_LENGTH, "OOPS!!! Please provide a valid task number to delete.");
+    }
+
+    private static int parseIndex(String input, int prefixLength, String errorMessage) throws PixelException {
+        if (input.length() <= prefixLength) {
+            throw new PixelException(errorMessage);
         }
         try {
-            return Integer.parseInt(input.substring(DELETE_PREFIX_LENGTH).trim()) - 1;
+            return Integer.parseInt(input.substring(prefixLength).trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new PixelException("OOPS!!! Please provide a valid task number to delete.");
+            throw new PixelException(errorMessage);
         }
     }
 
