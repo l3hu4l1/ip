@@ -122,10 +122,10 @@ public class Pixel {
     }
 
     private String handleFind(String input) throws PixelException {
-        String keyword = Parser.parseFindKeyword(input);
+        String searchCriteria = Parser.parseFindKeyword(input);
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)) {
+            if (Parser.matchesSearchCriteria(task.getDescription(), searchCriteria)) {
                 matchingTasks.add(task);
             }
         }
