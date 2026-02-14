@@ -22,6 +22,8 @@ public class Pixel {
     private final Storage storage;
     private ArrayList<Task> tasks;
     private boolean toExit = false;
+    private Task pendingTask = null;
+    private boolean awaitingConfirmation = false;
 
     /**
      * Creates a new Pixel instance and loads existing tasks from storage.
@@ -89,6 +91,11 @@ public class Pixel {
     private String handleTodo(String input) throws PixelException {
         String description = Parser.parseTodoDescription(input);
         Task task = new Todo(description);
+
+        if (isDuplicated(task)) {
+            return getDuplicateMessage(task);
+        }
+
         tasks.add(task);
         storage.save(tasks);
         return responseFormatter.getTaskAddedMessage(task, tasks.size());
@@ -98,6 +105,11 @@ public class Pixel {
         String description = Parser.parseDeadlineDescription(input);
         LocalDateTime by = Parser.parseDeadlineBy(input);
         Task task = new Deadline(description, by);
+
+        if (isDuplicated(task)) {
+            return getDuplicateMessage(task);
+        }
+
         tasks.add(task);
         storage.save(tasks);
         return responseFormatter.getTaskAddedMessage(task, tasks.size());
@@ -108,6 +120,11 @@ public class Pixel {
         LocalDateTime from = Parser.parseEventFrom(input);
         LocalDateTime to = Parser.parseEventTo(input);
         Task task = new Event(description, from, to);
+
+        if (isDuplicated(task)) {
+            return getDuplicateMessage(task);
+        }
+
         tasks.add(task);
         storage.save(tasks);
         return responseFormatter.getTaskAddedMessage(task, tasks.size());
@@ -185,6 +202,13 @@ public class Pixel {
 
         // For Todo, just description match is enough
         return true;
+    }
+
+    private String getDuplicateMessage(Task task) {
+        pendingTask = task;
+        awaitingConfirmation = true;
+        return "This task already exists in your list:\n  " + findDuplicate(task)
+                + "\n\nDo you still want to add it? (Y/N)";
     }
 
     public boolean toExit() {
