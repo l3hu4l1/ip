@@ -49,6 +49,11 @@ public class Pixel {
      */
     public String getResponse(String input) {
         try {
+            // Handle confirmation responses
+            if (awaitingConfirmation) {
+                return handleConfirmation(input);
+            }
+
             String command = input.split("\\s+", 2)[0];
             return switch (command) {
             case "bye" -> handleBye();
@@ -159,6 +164,25 @@ public class Pixel {
     private void validateTaskIndex(int taskIndex, int taskCount) throws PixelException {
         if (taskIndex < 0 || taskIndex >= taskCount) {
             throw new PixelException("OOPS!!! The task index is invalid.");
+        }
+    }
+
+    private String handleConfirmation(String input) throws PixelException {
+        String response = input.trim().toUpperCase();
+        awaitingConfirmation = false;
+
+        if (response.equals("Y")) {
+            tasks.add(pendingTask);
+            storage.save(tasks);
+            String result = responseFormatter.getTaskAddedMessage(pendingTask, tasks.size());
+            pendingTask = null;
+            return result;
+        } else if (response.equals("N")) {
+            pendingTask = null;
+            return "Okay, I won't add the duplicate task.";
+        } else {
+            awaitingConfirmation = true;
+            return "Please respond with Y (yes) or N (no).";
         }
     }
 
