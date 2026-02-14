@@ -145,6 +145,48 @@ public class Pixel {
         }
     }
 
+    private boolean isDuplicated(Task newTask) {
+        return findDuplicate(newTask) != null;
+    }
+
+    private Task findDuplicate(Task newTask) {
+        for (Task task : tasks) {
+            if (areDuplicates(task, newTask)) {
+                return task;
+            }
+        }
+        return null;
+    }
+
+    private boolean areDuplicates(Task task1, Task task2) {
+        // Different types are not duplicates
+        if (task1.getTaskType() != task2.getTaskType()) {
+            return false;
+        }
+
+        // Check description (case-insensitive)
+        if (!task1.getDescription().equalsIgnoreCase(task2.getDescription())) {
+            return false;
+        }
+
+        // For Deadline, check if dates match
+        if (task1 instanceof Deadline && task2 instanceof Deadline) {
+            Deadline d1 = (Deadline) task1;
+            Deadline d2 = (Deadline) task2;
+            return d1.getBy().equals(d2.getBy());
+        }
+
+        // For Event, check if dates match
+        if (task1 instanceof Event && task2 instanceof Event) {
+            Event e1 = (Event) task1;
+            Event e2 = (Event) task2;
+            return e1.getFrom().equals(e2.getFrom()) && e1.getTo().equals(e2.getTo());
+        }
+
+        // For Todo, just description match is enough
+        return true;
+    }
+
     public boolean toExit() {
         return toExit;
     }
