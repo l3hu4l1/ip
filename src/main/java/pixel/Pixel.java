@@ -23,7 +23,7 @@ public class Pixel {
     private ArrayList<Task> tasks;
     private boolean toExit = false;
     private Task pendingTask = null;
-    private boolean awaitingConfirmation = false;
+    private boolean isAwaitingConfirmation = false;
 
     /**
      * Creates a new Pixel instance and loads existing tasks from storage.
@@ -50,7 +50,7 @@ public class Pixel {
     public String getResponse(String input) {
         try {
             // Handle confirmation responses
-            if (awaitingConfirmation) {
+            if (isAwaitingConfirmation) {
                 return handleConfirmation(input);
             }
 
@@ -169,7 +169,7 @@ public class Pixel {
 
     private String handleConfirmation(String input) throws PixelException {
         String response = input.trim().toUpperCase();
-        awaitingConfirmation = false;
+        isAwaitingConfirmation = false;
 
         if (response.equals("Y")) {
             tasks.add(pendingTask);
@@ -181,7 +181,7 @@ public class Pixel {
             pendingTask = null;
             return "Okay, I won't add the duplicate task.";
         } else {
-            awaitingConfirmation = true;
+            isAwaitingConfirmation = true;
             return "Please respond with Y (yes) or N (no).";
         }
     }
@@ -230,7 +230,7 @@ public class Pixel {
 
     private String getDuplicateMessage(Task task) {
         pendingTask = task;
-        awaitingConfirmation = true;
+        isAwaitingConfirmation = true;
         return "This task already exists in your list:\n  " + findDuplicate(task)
                 + "\n\nDo you still want to add it? (Y/N)";
     }
