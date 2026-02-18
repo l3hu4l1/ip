@@ -1,6 +1,8 @@
 # User Guide
 
-<img src="Ui.png" alt="Pixel Logo" width="80%">
+<div align="center">
+  <img src="Ui.png" alt="Pixel Logo" width="50%">
+</div>
 
 Pixel is a friendly GUI task assistant that helps you keep track of your todos,
 deadlines, and events. All tasks are automatically saved to disk and loaded when
@@ -17,7 +19,7 @@ you restart the application.
 - Tasks are saved automatically
 - Display task list with status markers
 
-## Quick start
+## Quick Start
 
 1. Ensure you have Java 11 or above installed with JavaFX support.
 2. Download and run the jar file from the latest release.
