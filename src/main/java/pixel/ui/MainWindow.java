@@ -17,10 +17,10 @@ import pixel.Pixel;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
-    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
-            "/images/DaUser.png")));
-    private final Image pixelImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
-            "/images/DaPixel.png")));
+    private final Image userImage = new Image(
+                                    Objects.requireNonNull(this.getClass().getResourceAsStream("/images/DaUser.png")));
+    private final Image pixelImage = new Image(
+                                    Objects.requireNonNull(this.getClass().getResourceAsStream("/images/DaPixel.png")));
     @FXML
     private ScrollPane scrollPane;
     @FXML
