@@ -1,6 +1,6 @@
-# Pixel User Guide
+# User Guide
 
-![Pixel Logo](Ui.png)
+<img src="Ui.png" alt="Pixel Logo" width="80%">
 
 Pixel is a friendly GUI task assistant that helps you keep track of your todos,
 deadlines, and events. All tasks are automatically saved to disk and loaded when
