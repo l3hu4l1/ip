@@ -1,29 +1,27 @@
 # Pixel User Guide
 
-![Pixel Logo](pixel.png)
+![Pixel Logo](Ui.png)
 
-Pixel is a CLI task assistant that helps you keep track of your todos,
+Pixel is a friendly GUI task assistant that helps you keep track of your todos,
 deadlines, and events. All tasks are automatically saved to disk and loaded when
 you restart the application.
 
 ## Features
 
+- Modern JavaFX interface
 - Add three types of tasks: todos, deadlines, and events
 - Mark tasks as done or not done
 - Delete tasks from your list
+- Search for tasks
+- Detection of duplicate tasks
 - Tasks are saved automatically
-- Display all your tasks with status indicators
+- Display task list with status markers
 
 ## Quick start
 
-1. Ensure you have Java 11 or above installed.
-2. Build and run:
-    ```bash
-    $ javac -d bin src/main/java/*.java
-    $ java -classpath bin Pixel
-    ```
-3. Type commands followed by Enter.
-4. Your tasks are automatically saved to `./data/pixel.txt`
+1. Ensure you have Java 11 or above installed with JavaFX support.
+2. Download and run the jar file from the latest release.
+4. Type your commands in the text bar and press Enter or click Send.
 
 ## Commands Summary
 
@@ -36,85 +34,50 @@ you restart the application.
 | Mark done     | `mark INDEX`                                                      |
 | Mark not done | `unmark INDEX`                                                    |
 | Delete task   | `delete INDEX`                                                    |
+| Find tasks    | `find KEYWORD [MORE_KEYWORDS...]`                                 |
 | Exit          | `bye`                                                             |
 
 ## Feature Details
 
 ### Add various task types
 
-Pixel supports three types of tasks:
+Pixel supports three types of tasks
 
 - **Todo [T]**: Simple tasks
 - **Deadline [D]**: Tasks with a deadline
 - **Event [E]**: Tasks with a start and end date/time
 
-```
-$ todo borrow book
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ] borrow book
- Now you have 1 tasks in the list.
-____________________________________________________________
-
-$ deadline return book /by 2026-06-15 1800
-____________________________________________________________
- Got it. I've added this task:
-   [D][ ] return book (by: Jun 15 2026 18:00)
- Now you have 2 tasks in the list.
-____________________________________________________________
-
-$ event project meeting /from 2026-08-20 1400 /to 2026-08-20 1600
-____________________________________________________________
- Got it. I've added this task:
-   [E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
- Now you have 3 tasks in the list.
-____________________________________________________________
-```
-
 ### Display all tasks
 
-View all your tasks with their status:
-
-```
-$ list
-____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ] borrow book
- 2.[D][ ] return book (by: Jun 15 2026 18:00)
- 3.[E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
-____________________________________________________________
-```
+View all your tasks with their statuses.
 
 ### Mark and unmark tasks
 
-Track completion status with `[X]` for done and `[ ]` for not done:
-
-```
-$ mark 2
-____________________________________________________________
- Nice! I've marked this task as done:
-   [D][X] return book (by: Jun 15 2026 18:00)
-____________________________________________________________
-
-$ unmark 2
-____________________________________________________________
- OK, I've marked this task as not done yet:
-   [D][ ] return book (by: Jun 15 2026 18:00)
-____________________________________________________________
-```
+Track completion status with `[X]` for done and `[ ]` for not done.
 
 ### Delete tasks
 
-Remove tasks you no longer need:
+Remove tasks you no longer need.
 
-```
-$ delete 3
-____________________________________________________________
- Noted. I've removed this task:
-   [E][ ] project meeting (from: Aug 20 2026 14:00 to: Aug 20 2026 16:00)
- Now you have 2 tasks in the list.
-____________________________________________________________
-```
+### Find tasks
+
+Search for tasks using flexible keyword matching
+
+- **Case-insensitive**: `book` matches `Book` or `BOOK`
+- **Partial matching**: `meet` matches `meeting`
+- **Multiple keywords**
+
+### Duplicate detection
+
+When you try to add a task that already exists, Pixel will detect it and ask for
+confirmation.
+
+**Duplicate detection rules**
+
+- Same task type (Todo, Deadline, or Event)
+- Same description
+- For Deadlines: Same date/time
+- For Events: Same start and end date/time
 
 ### Data Persistence
 
