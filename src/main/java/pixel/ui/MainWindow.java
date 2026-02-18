@@ -49,9 +49,11 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = pixel.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getPixelDialog(response, pixelImage));
+
+        DialogBox responseDialog = isErrorMessage(response) ? DialogBox.getPixelErrorDialog(response, pixelImage)
+                                        : DialogBox.getPixelDialog(response, pixelImage);
+
+        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage), responseDialog);
         userInput.clear();
 
         if (pixel.toExit()) {
@@ -59,5 +61,14 @@ public class MainWindow extends AnchorPane {
             delay.setOnFinished(event -> Platform.exit());
             delay.play();
         }
+    }
+
+    /**
+     * Checks if a message is an error message. Error messages typically start
+     * with "OOPS!!!" or contain error indicators.
+     */
+    private boolean isErrorMessage(String message) {
+        return message.startsWith("OOPS!!!") || message.contains("invalid") || message.contains("cannot")
+                                        || message.contains("Please respond");
     }
 }

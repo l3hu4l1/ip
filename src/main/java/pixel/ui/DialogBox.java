@@ -51,6 +51,17 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Flips the dialog box and applies error styling.
+     */
+    private void flipWithErrorStyle() {
+        this.setAlignment(Pos.TOP_LEFT);
+        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        FXCollections.reverse(tmp);
+        this.getChildren().setAll(tmp);
+        dialog.getStyleClass().add("error-label");
+    }
+
     public static DialogBox getUserDialog(String s, Image i) {
         return new DialogBox(s, i);
     }
@@ -58,6 +69,12 @@ public class DialogBox extends HBox {
     public static DialogBox getPixelDialog(String s, Image i) {
         var db = new DialogBox(s, i);
         db.flip();
+        return db;
+    }
+
+    public static DialogBox getPixelErrorDialog(String s, Image i) {
+        var db = new DialogBox(s, i);
+        db.flipWithErrorStyle();
         return db;
     }
 }

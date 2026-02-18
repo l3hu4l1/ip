@@ -10,6 +10,16 @@
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
 }
+
+.error-label {
+    -fx-background-color: #ffcccc;
+    -fx-text-fill: #8b0000;
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+    -fx-border-color: #d32f2f;
+    -fx-border-width: 2px;
+}
+
 /* Paste this below reply-label */
 .add-label {
     -fx-background-color: yellow;
@@ -25,8 +35,8 @@
 
 
 #displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+    /* Enhanced shadow effect on circular image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.6, 2, 2);
 
     /* Change size of image. */
     -fx-scale-x: 1;
